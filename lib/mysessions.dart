@@ -22,7 +22,18 @@ class _MysessionsState extends State<Mysessions> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(length: 3,
-      child: Scaffold(
+      child: Scaffold( floatingActionButton: FloatingActionButton(
+        elevation: 1,
+        onPressed: () {
+            
+        },
+        backgroundColor: Colors.black,
+        foregroundColor: Colors.white,
+        child: const Icon(
+          Icons.add,
+          size: 32,
+        ),
+      ),
         backgroundColor: Colors.white,
         appBar: AppBar(
           centerTitle: true,

@@ -13,18 +13,7 @@ class _MysessionsAllState extends State<MysessionsAll> {
     return Scaffold(
      
       backgroundColor: Colors.white,
-      floatingActionButton: FloatingActionButton(
-        elevation: 1,
-        onPressed: () {
-            
-        },
-        backgroundColor: Colors.black,
-        foregroundColor: Colors.white,
-        child: const Icon(
-          Icons.add,
-          size: 32,
-        ),
-      ),
+     
       body: Column(
         children: [
           Expanded(
