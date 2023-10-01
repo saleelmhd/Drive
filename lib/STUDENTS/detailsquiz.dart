@@ -1,4 +1,3 @@
-import 'package:drive_/beginartab.dart';
 import 'package:flutter/material.dart';
 
 class DetailQuiz extends StatefulWidget {

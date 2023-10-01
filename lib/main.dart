@@ -1,9 +1,6 @@
 
-import 'package:drive_/Questionbank.dart';
-import 'package:drive_/Trail%20Appointment.dart';
-import 'package:drive_/drivingschool.dart';
-import 'package:drive_/mydocuments.dart';
-import 'package:drive_/packages.dart';
+import 'package:drive_/ADMIN/AddnewVehicle.dart';
+
 import 'package:flutter/material.dart';
 
 void main(){
@@ -18,9 +15,7 @@ class MyApp extends StatelessWidget {
     return  MaterialApp(
       
       debugShowCheckedModeBanner: false,
-      home:TrailAppointment(
-
-      ),
+      home:   AddNewVehicle(),
       //splashScreen
     );
   }

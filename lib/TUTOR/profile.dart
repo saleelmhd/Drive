@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
-class Profile extends StatefulWidget {
-  const Profile({super.key});
+class ProfileTutor extends StatefulWidget {
+  const ProfileTutor({super.key});
 
   @override
-  State<Profile> createState() => _ProfileState();
+  State<ProfileTutor> createState() => _ProfileTutorState();
 }
 
-class _ProfileState extends State<Profile> {
+class _ProfileTutorState extends State<ProfileTutor> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +62,7 @@ class _ProfileState extends State<Profile> {
                     child: CircleAvatar(
                       radius: 60,
                       backgroundImage: AssetImage(
-                        "images/profilepic.png",
+                        "images/profiletutor.png",
                       ),
                     ),
                   ),
@@ -86,16 +86,18 @@ class _ProfileState extends State<Profile> {
                     ),
                   ),
                 ),
-                Positioned(
+                const Positioned(
                     right: 10,
                     top: 60,
-                    child: Container(
+                    child: SizedBox(
                         width: 24,
                         height: 25,
-                        child: Image.asset(
-                          "images/img.png",
-                          fit: BoxFit.cover,
-                        ))),
+                        // child: Image.asset(
+                        //   "images/img.png",
+                        //   fit: BoxFit.cover,
+                        // )
+                        child: Icon(Icons.notifications,size: 25,),
+                        )),
                 Positioned(
                   right: 40,
                   top: 160,
@@ -103,13 +105,13 @@ class _ProfileState extends State<Profile> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        "Anagelia Jackson",
+                        "Muhammed Razan",
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 16),
                       ),
                       const Padding(
                         padding: EdgeInsets.symmetric(vertical: 5),
-                        child: Text("Analyzer",
+                        child: Text("Tutor",
                             style: TextStyle(
                                 fontWeight: FontWeight.w300, fontSize: 14)),
                       ),
@@ -127,61 +129,13 @@ class _ProfileState extends State<Profile> {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 100, left: 30, right: 20),
+              padding: const EdgeInsets.only(top: 60, left: 30, right: 20),
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      "Strong side :",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Wrap(
-                      spacing: 10,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 231, 243, 243),
-                              borderRadius: BorderRadius.circular(8)),
-                          width: 84,
-                          height: 28,
-                          child: const Center(
-                              child: Text(
-                            "Analytics",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          )),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 231, 243, 243),
-                              borderRadius: BorderRadius.circular(8)),
-                          width: 84,
-                          height: 28,
-                          child: const Center(
-                              child: Text(
-                            "Analytics",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          )),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 231, 243, 243),
-                              borderRadius: BorderRadius.circular(8)),
-                          width: 84,
-                          height: 28,
-                          child: const Center(
-                              child: Text(
-                            "Analytics",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          )),
-                        ),
-                      ],
-                    ),
+                  
                     const SizedBox(
                       height: 30,
                     ),
@@ -294,7 +248,7 @@ class _ProfileState extends State<Profile> {
                                   height: 10,
                                 ),
                                 const Text(
-                                  "My Tutor",
+                                  "My Students",
                                   style: TextStyle(
                                       fontSize: 13,
                                       fontWeight: FontWeight.bold),
@@ -389,7 +343,7 @@ class _ProfileState extends State<Profile> {
                                   height: 10,
                                 ),
                                 Text(
-                                  "Refer My Friend",
+                                  "Help",
                                   style: TextStyle(
                                       fontSize: 13,
                                       fontWeight: FontWeight.bold),

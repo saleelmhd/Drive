@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class HomepageUser extends StatefulWidget {
-  const HomepageUser({Key? key});
+class HomepagStud extends StatefulWidget {
+  const HomepagStud({Key? key});
 
   @override
-  State<HomepageUser> createState() => _HomepageUserState();
+  State<HomepagStud> createState() => _HomepagStudState();
 }
 
-class _HomepageUserState extends State<HomepageUser> {
+class _HomepagStudState extends State<HomepagStud> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,8 +17,9 @@ class _HomepageUserState extends State<HomepageUser> {
             automaticallyImplyLeading: false,
             floating: true,
             pinned: true,
-            primary: false,
-            expandedHeight: 230,
+           
+            expandedHeight: 210,
+            toolbarHeight: 210,
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(30),
@@ -51,15 +52,16 @@ class _HomepageUserState extends State<HomepageUser> {
                     const Text(
                       "Hello User",
                       style: TextStyle(
-                        fontSize: 30,
+                        fontSize: 25,
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+                      const SizedBox(height: 5),
                     const Text(
                       "Good Morning...!",
                       style: TextStyle(
-                        fontSize: 17,
+                        fontSize: 16,
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
@@ -124,20 +126,20 @@ class _HomepageUserState extends State<HomepageUser> {
                             const Text(
                               "Sessions",
                               style: TextStyle(fontFamily: 'Alegreya',
-                                  fontSize: 25, fontWeight: FontWeight.bold),
+                                  fontSize: 22, fontWeight: FontWeight.bold),
                             ),  const SizedBox(
                               height: 5,
                             ),
                             const Text(
-                              "Check your driving \n sessions here",
+                              "Check your driving \nsessions here",
                               style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.bold),
+                                  fontSize: 12, fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(
                               height: 12,
                             ),
                             ElevatedButton(
-                              style: ElevatedButton.styleFrom(minimumSize: const Size(120, 50),            backgroundColor: const Color.fromRGBO(38, 52, 53, 1),
+                              style: ElevatedButton.styleFrom(minimumSize: const Size(120, 40),            backgroundColor: const Color.fromRGBO(38, 52, 53, 1),
 foregroundColor: Colors.white,
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))
                               ),

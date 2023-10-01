@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Reg extends StatefulWidget {
-  const Reg({super.key});
+class RegTutor extends StatefulWidget {
+  const RegTutor({super.key});
 
   @override
-  State<Reg> createState() => _RegState();
+  State<RegTutor> createState() => _RegTutorState();
 }
 
-class _RegState extends State<Reg> {
+class _RegTutorState extends State<RegTutor> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +47,7 @@ class _RegState extends State<Reg> {
                     ),
                     CircleAvatar(
                       radius: 70,
-                      backgroundImage: AssetImage("images/profilepic.png"),
+                      backgroundImage: AssetImage("images/profiletutor.png"),
                     ),
                     Positioned(
                         right: 0,
@@ -60,7 +60,7 @@ class _RegState extends State<Reg> {
                         top: 40,
                         child: CircleAvatar(
                           backgroundColor: Colors.white,
-                          child: CircleAvatar(
+                          child: CircleAvatar(foregroundColor: Colors.white,
                             radius: 17,
                             backgroundColor: Color.fromRGBO(38, 52, 53, 1),child: Icon(Icons.edit,size: 17,),
                           ),
