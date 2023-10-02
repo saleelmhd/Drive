@@ -1,5 +1,11 @@
 
-import 'package:drive_/ADMIN/AddnewVehicle.dart';
+import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:drive_/ADMIN/HomapageAdmin.dart';
+import 'package:drive_/ADMIN/QuestionBank.dart';
+import 'package:drive_/ADMIN/Quiz.dart';
+import 'package:drive_/ADMIN/Trial%20Appointments.dart';
+import 'package:drive_/ADMIN/newSession.dart';
+import 'package:drive_/STUDENTS/FORMSCREENS/login.dart';
 
 import 'package:flutter/material.dart';
 
@@ -15,8 +21,16 @@ class MyApp extends StatelessWidget {
     return  MaterialApp(
       
       debugShowCheckedModeBanner: false,
-      home:   AddNewVehicle(),
-      //splashScreen
+      home:    AnimatedSplashScreen(
+          splash: Image.asset(
+            "Images/Welcome.jpg",
+            fit: BoxFit.cover,
+          ),
+          nextScreen: Login(),
+          splashTransition: SplashTransition.rotationTransition,
+          duration: 5000,
+          splashIconSize: 80,
+        )
     );
   }
 }

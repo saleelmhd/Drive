@@ -102,50 +102,53 @@ class _HomapageAdminState extends State<HomapageAdmin> {
                 ),
               ),
             ),
-            pinned: false, 
+            pinned: true, 
           ),
-          SliverGrid(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: 10.0, 
-              crossAxisSpacing: 10.0,
-              
-            ),
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return GridTile(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: const Color.fromRGBO(245, 249, 249, 1),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    height: 130,
-                    width: 150,
-                    child: const Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          height: 44,
-                          width: 44,
-                          child: Image(
-                            image: AssetImage("images/sessionblack.png"),
-                            fit: BoxFit.cover,
+          
+          SliverPadding(padding: EdgeInsets.symmetric(horizontal:30,vertical: 30),
+            sliver: SliverGrid(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 10.0, 
+                crossAxisSpacing: 10.0,
+                
+              ),
+              delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+                  return GridTile(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: const Color.fromRGBO(245, 249, 249, 1),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      height: 130,
+                      width: 150,
+                      child: const Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: 44,
+                            width: 44,
+                            child: Image(
+                              image: AssetImage("images/sessionblack.png"),
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                        ),
-                        Text(
-                          "Sessions",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                          Text(
+                            "  Sessions",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              },
-              childCount: 8,
+                  );
+                },
+                childCount: 8,
+              ),
             ),
           )
         ],
