@@ -118,7 +118,7 @@ class _TutorsState extends State<Tutors> {
         backgroundColor: Colors.white,
         body: CustomScrollView(
           slivers: <Widget>[
-            SliverAppBar(
+            SliverAppBar(automaticallyImplyLeading: false,
               toolbarHeight: 200,
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(

@@ -8,6 +8,22 @@ class UpdateTutor extends StatefulWidget {
 }
 
 class _UpdateTutorState extends State<UpdateTutor> {
+   String? _selected;
+
+  List<String> _sex = [
+    'Male',
+    'Female',
+    'Other',
+    // Add more as needed
+  ];
+    String? _selectedVehicle;
+
+  List<String> _vehicles = [
+     '1 whealer',
+    '2 whealer',
+    '3 whealer',
+    // Add more vehicles as needed
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,14 +97,14 @@ class _UpdateTutorState extends State<UpdateTutor> {
                   ],
                 ),
                 const Padding(
-                  padding: EdgeInsets.only(right: 20.0,bottom: 5),
+                  padding: EdgeInsets.only(right: 20.0, bottom: 5),
                   child: Text(
                     "Id : PM64785",
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ),
                 const Padding(
-                  padding: EdgeInsets.only(right:20.0),
+                  padding: EdgeInsets.only(right: 20.0),
                   child: Text(
                     "Pass : MK0147258",
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
@@ -142,18 +158,30 @@ class _UpdateTutorState extends State<UpdateTutor> {
                         width: 10,
                       ),
                       Expanded(
-                        child: SizedBox(
+                        child: Container(
+                          color:  const Color.fromRGBO(247, 248, 249, 1),
                           width: MediaQuery.of(context).size.width / 2,
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10)),
-                              filled: true,
-                              fillColor: const Color.fromRGBO(247, 248, 249, 1),
-                              hintText: 'Sex',
-                            ),
-                            keyboardType: TextInputType.emailAddress,
-                          ),
+                          child:  DropdownButtonFormField<String>(
+                borderRadius: BorderRadius.circular(20),
+                value: _selected,
+                items: _sex.map((String gender) {
+                  return DropdownMenuItem<String>(
+                    value: gender,
+                    child: Text(gender),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    _selected = newValue;
+                  });
+                },
+                decoration: InputDecoration(
+                 
+                  hintText: "Sex",
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10)), // Add a border
+                ),
+              ),
                         ),
                       ),
                     ],
@@ -208,21 +236,105 @@ class _UpdateTutorState extends State<UpdateTutor> {
                     ],
                   ),
                 ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    filled: true,
-                    fillColor: const Color.fromRGBO(247, 248, 249, 1),
-                    hintText: 'Heavy,Two Whealer',
-                  ),
-                  keyboardType: TextInputType.emailAddress,
+               Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: const Color.fromRGBO(247, 248, 249, 1),
                 ),
+                child: DropdownButtonFormField<String>(
+                  borderRadius: BorderRadius.circular(20),
+                  value: _selectedVehicle,
+                  items: _vehicles.map((String veh) {
+                    return DropdownMenuItem<String>(
+                      value: veh,
+                      child: Text(veh),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      _selectedVehicle = newValue;
+                    });
+                  },
+                  decoration: InputDecoration(
+                    hintText: "Heavy ,Two Wheeler",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+              ),
                 const SizedBox(
                   height: 20,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15)),
+                          backgroundColor: const Color.fromRGBO(37, 51, 52, 1),
+                          title: const Padding(
+                            padding: EdgeInsets.all(20.0),
+                            child: Column(
+                              children: [
+                                Text(
+                                  'DO YOU WANT TO REMOVE',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 13),
+                                ),
+                                Text(
+                                  'THE TUTOR !?',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 13),
+                                ),
+                              ],
+                            ),
+                          ),
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              const Text(
+                                "the student will be remove permanently from the database",
+                                style: TextStyle(fontSize: 12),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              const Text(
+                                "the student will be remove permanently from .",
+                                style: TextStyle(fontSize: 14),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.black,
+                                      foregroundColor: Colors.white,
+                                      minimumSize: const Size(256, 36),
+                                      side:
+                                          const BorderSide(color: Colors.white),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5))),
+                                  onPressed: () {},
+                                  child: const Text(
+                                    "REMOVE",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w300),
+                                  )),
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     minimumSize: Size(MediaQuery.of(context).size.width, 50),
                     backgroundColor: const Color.fromRGBO(38, 52, 53, 1),

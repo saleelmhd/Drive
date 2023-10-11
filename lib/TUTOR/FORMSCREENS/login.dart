@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class LoginTutor extends StatefulWidget {
-  const LoginTutor({super.key});
+class ForgetPasswordd extends StatefulWidget {
+  const ForgetPasswordd({super.key});
 
   @override
-  State<LoginTutor> createState() => _LoginTutorState();
+  State<ForgetPasswordd> createState() => _ForgetPassworddState();
 }
 
-class _LoginTutorState extends State<LoginTutor> {
+class _ForgetPassworddState extends State<ForgetPasswordd> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(backgroundColor: Colors.white,

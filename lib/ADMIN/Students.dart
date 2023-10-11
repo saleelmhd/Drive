@@ -1,3 +1,4 @@
+import 'package:drive_/ADMIN/AddStudent.dart';
 import 'package:drive_/ADMIN/StudALL.dart'; // Import your StudALL widget
 import 'package:drive_/tabar/tabbaritem.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,8 @@ class _StudentsState extends State<Students> {
           width: 50,
           child: FloatingActionButton(highlightElevation: 5,
             elevation: 1,
-            onPressed: () {
+            onPressed: () {Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => AddStud()));
               // showDialog(
               //   context: context,
               //   builder: (BuildContext context) {
@@ -118,7 +120,7 @@ class _StudentsState extends State<Students> {
         backgroundColor: Colors.white,
         body: CustomScrollView(
           slivers: <Widget>[
-            SliverAppBar(
+            SliverAppBar(automaticallyImplyLeading: false,
               toolbarHeight: 200,
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(

@@ -1,3 +1,4 @@
+import 'package:drive_/ADMIN/UpdateTutor.dart';
 import 'package:flutter/material.dart';
 
 class TutorsALL extends StatefulWidget {
@@ -17,7 +18,7 @@ class _TutorsALLState extends State<TutorsALL> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: ListView.separated(
-                padding: EdgeInsets.all(0),
+                padding: const EdgeInsets.all(0),
                 itemCount: 2,
                 itemBuilder: (context, index) => Card(
                   elevation: 4,
@@ -31,16 +32,18 @@ class _TutorsALLState extends State<TutorsALL> {
                     //       color: Colors.grey)
                     // ]),
                     child: ListTile(
-                      trailing: const Padding(
-                          padding: EdgeInsets.all(12.0),
-                          child: CircleAvatar(
-                            radius: 15,
-                            child: Icon(
-                              Icons.arrow_forward,
-                              size: 17,
+                      trailing:  Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: GestureDetector(onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const UpdateTutor())),
+                            child: const CircleAvatar(
+                              radius: 15,
+                              backgroundColor: Colors.black,
+                              foregroundColor: Colors.white,
+                              child: Icon(
+                                Icons.arrow_forward,
+                                size: 17,
+                              ),
                             ),
-                            backgroundColor: Colors.black,
-                            foregroundColor: Colors.white,
                           )),
                       contentPadding: const EdgeInsets.only(top: 5, left: 20),
                       leading: Container(
@@ -50,25 +53,25 @@ class _TutorsALLState extends State<TutorsALL> {
                             color: Colors.grey,
                             borderRadius: BorderRadius.circular(5)),
                       ),
-                      title: Column(
+                      title: const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                            padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
                             child: Text(
                               "Shibin Farhan",
-                              style: const TextStyle(
+                              style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 16),
                             ),
                           ),
                           Row(
                             children: [
-                              Container(
+                              SizedBox(
                                   height: 16,
                                   width: 16,
-                                  child: const Image(
+                                  child: Image(
                                       image: AssetImage("images/note.png"))),
-                              const Padding(
+                              Padding(
                                 padding: EdgeInsets.symmetric(vertical: 5),
                                 child: Text(
                                   " 10 Sessions",
@@ -79,7 +82,7 @@ class _TutorsALLState extends State<TutorsALL> {
                               ),
                             ],
                           ),
-                          const Row(
+                          Row(
                             children: [
                               Icon(
                                 Icons.schedule,

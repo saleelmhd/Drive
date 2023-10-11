@@ -26,7 +26,7 @@ class _SendNotificationState extends State<SendNotification> {
         backgroundColor: Colors.white,
         body: CustomScrollView(
           slivers: <Widget>[
-            SliverAppBar(
+            SliverAppBar(automaticallyImplyLeading: false,
               toolbarHeight: 200,
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(

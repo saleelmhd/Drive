@@ -1,5 +1,7 @@
+import 'package:drive_/TUTOR/FORMSCREENS/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LoginnTutor extends StatefulWidget {
   const LoginnTutor({super.key});
@@ -58,13 +60,11 @@ class _LoginnTutorState extends State<LoginnTutor> {
           const SizedBox(
             height: 50,
           ),
-          const Text(
-            "Think about safety \n first! Then drive...",
-            style: TextStyle(
-              fontSize: 25,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          Text("Think about safety \n first! Then drive...",
+              style: GoogleFonts.urbanist(
+                fontSize: 28,
+                fontWeight: FontWeight.w700,
+              )),
           const SizedBox(
             height: 50,
           ),
@@ -74,7 +74,8 @@ class _LoginnTutorState extends State<LoginnTutor> {
               filled: true,
               fillColor: const Color.fromRGBO(247, 248, 249, 1),
               hintText: 'Enter Your ID',
-           
+            hintStyle: GoogleFonts.urbanist(
+                  fontSize: 15, fontWeight: FontWeight.w300),
             ),
             keyboardType: TextInputType.emailAddress,
           ), const SizedBox(
@@ -87,6 +88,8 @@ class _LoginnTutorState extends State<LoginnTutor> {
               filled: true,
               fillColor: const Color.fromRGBO(247, 248, 249, 1),
               hintText: 'Enter Your Password',
+               hintStyle: GoogleFonts.urbanist(
+                  fontSize: 15, fontWeight: FontWeight.w300),
               suffixIcon: IconButton(
                                 icon: Icon(
                                   _isPasswordVisible
@@ -102,7 +105,24 @@ class _LoginnTutorState extends State<LoginnTutor> {
            
             ),
             keyboardType: TextInputType.visiblePassword,
-          ), const SizedBox(
+          ),  Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: ((context) => const ForgetPasswordd())));
+                  },
+                  child: Text(
+                    "Forget Password ?",
+                    style: GoogleFonts.urbanist(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black),
+                  )),
+            ],
+          ),
+           const SizedBox(
             height: 70,
           ),
            ElevatedButton(
@@ -115,7 +135,11 @@ class _LoginnTutorState extends State<LoginnTutor> {
                 borderRadius: BorderRadius.all(Radius.circular(10)),
               ),
             ),
-            child: const Text("Login"),
+            child: Text(
+              "Login",
+              style: (GoogleFonts.urbanist(
+                  fontSize: 15, fontWeight: FontWeight.w600)),
+            ),
           ), const SizedBox(height: 22,),
              Center(
               child: GestureDetector(onTap: (){},

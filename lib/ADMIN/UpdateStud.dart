@@ -8,6 +8,22 @@ class UpdateStud extends StatefulWidget {
 }
 
 class _UpdateStudState extends State<UpdateStud> {
+   String? _selected;
+
+  List<String> _sex = [
+    'Male',
+    'Female',
+    'Other',
+    // Add more as needed
+  ];
+   String? _selectedVehicle;
+
+  List<String> _vehicles = [
+     '1 whealer',
+    '2 whealer',
+    '3 whealer',
+    // Add more vehicles as needed
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -144,16 +160,27 @@ class _UpdateStudState extends State<UpdateStud> {
                       Expanded(
                         child: SizedBox(
                           width: MediaQuery.of(context).size.width / 2,
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10)),
-                              filled: true,
-                              fillColor: const Color.fromRGBO(247, 248, 249, 1),
-                              hintText: 'Sex',
-                            ),
-                            keyboardType: TextInputType.emailAddress,
-                          ),
+                          child:  DropdownButtonFormField<String>(
+                borderRadius: BorderRadius.circular(20),
+                value: _selected,
+                items: _sex.map((String gender) {
+                  return DropdownMenuItem<String>(
+                    value: gender,
+                    child: Text(gender),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    _selected = newValue;
+                  });
+                },
+                decoration: InputDecoration(
+                 
+                  hintText: "Sex",
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10)), // Add a border
+                ),
+              ),
                         ),
                       ),
                     ],
@@ -208,16 +235,33 @@ class _UpdateStudState extends State<UpdateStud> {
                     ],
                   ),
                 ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    filled: true,
-                    fillColor: const Color.fromRGBO(247, 248, 249, 1),
-                    hintText: 'Heavy,Two Whealer',
-                  ),
-                  keyboardType: TextInputType.emailAddress,
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: const Color.fromRGBO(247, 248, 249, 1),
                 ),
+                child: DropdownButtonFormField<String>(
+                  borderRadius: BorderRadius.circular(20),
+                  value: _selectedVehicle,
+                  items: _vehicles.map((String veh) {
+                    return DropdownMenuItem<String>(
+                      value: veh,
+                      child: Text(veh),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      _selectedVehicle = newValue;
+                    });
+                  },
+                  decoration: InputDecoration(
+                    hintText: "Heavy ,Two Wheeler",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+              ),
                 const SizedBox(
                   height: 20,
                 ),

@@ -1,14 +1,16 @@
+import 'package:drive_/STUDENTS/FORMSCREENS/login1.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class OTPverification extends StatefulWidget {
-  const OTPverification({super.key});
+   OTPverification({super.key});
 
   @override
   State<OTPverification> createState() => _OTPverificationState();
 }
 
 class _OTPverificationState extends State<OTPverification> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -145,7 +147,10 @@ class _OTPverificationState extends State<OTPverification> {
           padding: const EdgeInsets.only(
               top: 50.0, left: 25, right: 25, bottom: 40),
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(builder: ((context) =>  Loginn())));
+
+            },
             style: ElevatedButton.styleFrom(
               minimumSize: Size(MediaQuery.of(context).size.width, 50),
               backgroundColor: const Color.fromRGBO(38, 52, 53, 1),
@@ -167,7 +172,8 @@ class _OTPverificationState extends State<OTPverification> {
                 "Din't recieved Code?",
                 style: TextStyle(fontSize: 13),
               ),
-              GestureDetector(onTap: (){},
+              GestureDetector(onTap: (){
+              },
                 child: const Text(
                   " Resend",
                   style: TextStyle(fontSize: 14, color: Color.fromRGBO(38, 52, 53, 1),),

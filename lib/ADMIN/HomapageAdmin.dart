@@ -1,3 +1,12 @@
+import 'package:drive_/ADMIN/AddnewVehicle.dart';
+import 'package:drive_/ADMIN/QuestionBank.dart';
+import 'package:drive_/ADMIN/Quiz.dart';
+import 'package:drive_/ADMIN/SendNotification.dart';
+import 'package:drive_/ADMIN/Students.dart';
+import 'package:drive_/ADMIN/Tutors.dart';
+import 'package:drive_/ADMIN/model%20AdminHome.dart';
+import 'package:drive_/ADMIN/sessions.dart';
+import 'package:drive_/STUDENTS/Trail%20Appointment.dart';
 import 'package:flutter/material.dart';
 
 class HomapageAdmin extends StatefulWidget {
@@ -15,7 +24,8 @@ class _HomapageAdminState extends State<HomapageAdmin> {
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
-            toolbarHeight: 200,
+            toolbarHeight: 180,
+            expandedHeight: 180,
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(30),
@@ -30,17 +40,16 @@ class _HomapageAdminState extends State<HomapageAdmin> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // ignore: prefer_const_constructors
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Container(
-                          child: const Padding(
-                            padding: EdgeInsets.only(right: 20.0),
-                            child: Icon(
-                              Icons.notifications,
-                              color: Colors.white,
-                              size: 30,
-                            ),
+                      children: const [
+                         Padding(
+                          padding: EdgeInsets.only(right: 20.0),
+                          child: Icon(
+                            Icons.notifications,
+                            color: Colors.white,
+                            size: 30,
                           ),
                         ),
                       ],
@@ -92,9 +101,7 @@ class _HomapageAdminState extends State<HomapageAdmin> {
                         ),
                         IconButton(
                           icon: const Icon(Icons.search, color: Colors.white),
-                          onPressed: () {
-                           
-                          },
+                          onPressed: () {},
                         ),
                       ],
                     )
@@ -102,52 +109,96 @@ class _HomapageAdminState extends State<HomapageAdmin> {
                 ),
               ),
             ),
-            pinned: true, 
+            pinned: true,
+            floating: true,
           ),
-          
-          SliverPadding(padding: EdgeInsets.symmetric(horizontal:30,vertical: 30),
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
             sliver: SliverGrid(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                mainAxisSpacing: 10.0, 
+                mainAxisSpacing: 10.0,
                 crossAxisSpacing: 10.0,
-                
               ),
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
-                  return GridTile(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color.fromRGBO(245, 249, 249, 1),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      height: 130,
-                      width: 150,
-                      child: const Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            height: 44,
-                            width: 44,
-                            child: Image(
-                              image: AssetImage("images/sessionblack.png"),
-                              fit: BoxFit.cover,
+                  return GestureDetector(
+                  onTap: () {
+        switch (index) {
+          case 0:
+             Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => const Students()));         
+          break;
+          case 1:
+             Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => const Tutors()));         
+          break;
+          case 2:
+             Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => const AddNewVehicle()));         
+          break;
+          case 3:
+             Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => const SessionsAdmin()));         
+          break;
+          case 4:
+             Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => const TrailAppointment()));         
+          break;
+          case 5:
+             Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => const Qbank()));         
+          break;
+          case 6:
+             Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => const Quiz()));         
+          break;
+          case 7:
+             Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => const SendNotification()));         
+          break;
+         
+        }
+      },
+                    child: GridTile(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: const Color.fromRGBO(245, 249, 249, 1),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        height: 130,
+                        width: 150,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              height: 42,
+                              width: 46,
+                              child: Image(
+                                image: AssetImage(
+                                  "${ADMINHome[index]["Image"]}",
+                                ),
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                          ),
-                          Text(
-                            "  Sessions",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                            const SizedBox(
+                              height: 5,
                             ),
-                          ),
-                        ],
+                            Text(
+                              "${ADMINHome[index]["Name"]}",
+                              style: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   );
                 },
-                childCount: 8,
+                childCount: ADMINHome.length,
               ),
             ),
           )

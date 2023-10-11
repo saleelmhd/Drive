@@ -1,14 +1,15 @@
+import 'package:drive_/STUDENTS/FORMSCREENS/otpverification.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class ForgetPassword extends StatefulWidget {
+  const ForgetPassword({super.key});
 
   @override
-  State<Login> createState() => _LoginState();
+  State<ForgetPassword> createState() => _ForgetPasswordState();
 }
 
-class _LoginState extends State<Login> {
+class _ForgetPasswordState extends State<ForgetPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(backgroundColor: Colors.white,
@@ -17,10 +18,10 @@ class _LoginState extends State<Login> {
           padding: const EdgeInsets.all(40.0),
           child: Column(
             children: [
-             SizedBox(height: 60,),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 80),
-                child: Container(
+             const SizedBox(height: 60,),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 80),
+                child: SizedBox(
                   height: 250,
 
                   child: Image(image: AssetImage("images/loginimg.png"),fit: BoxFit.cover,),
@@ -45,13 +46,15 @@ class _LoginState extends State<Login> {
                 },
                 // Show numeric keyboard
               ),
-               SizedBox(
+               const SizedBox(
                 height: 30,
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: ((context) => OTPverification())));
+                },
                 style: ElevatedButton.styleFrom(minimumSize: Size(MediaQuery.of(context).size.width, 50),
-                  backgroundColor: Color.fromRGBO(38, 52, 53, 1),foregroundColor: Colors.white,
+                  backgroundColor: const Color.fromRGBO(38, 52, 53, 1),foregroundColor: Colors.white,
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                   ),
