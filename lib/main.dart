@@ -6,6 +6,7 @@ import 'package:drive_/ADMIN/UpdateStud.dart';
 import 'package:drive_/ADMIN/UpdateTutor.dart';
 import 'package:drive_/STUDENTS/FORMSCREENS/login%20or%20register.dart';
 import 'package:drive_/STUDENTS/StudHome.dart';
+import 'package:drive_/moduleScreen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return  MaterialApp(
         debugShowCheckedModeBanner: false,
-        home:UpdateTutor(),
+        home:Module(),
         
         //  AnimatedSplashScreen(
         //   splash: RichText(

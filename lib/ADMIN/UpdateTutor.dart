@@ -10,7 +10,7 @@ class UpdateTutor extends StatefulWidget {
 class _UpdateTutorState extends State<UpdateTutor> {
    String? _selected;
 
-  List<String> _sex = [
+  final List<String> _sex = [
     'Male',
     'Female',
     'Other',
@@ -18,7 +18,7 @@ class _UpdateTutorState extends State<UpdateTutor> {
   ];
     String? _selectedVehicle;
 
-  List<String> _vehicles = [
+  final List<String> _vehicles = [
      '1 whealer',
     '2 whealer',
     '3 whealer',
@@ -149,7 +149,7 @@ class _UpdateTutorState extends State<UpdateTutor> {
                                 borderRadius: BorderRadius.circular(10)),
                             filled: true,
                             fillColor: const Color.fromRGBO(247, 248, 249, 1),
-                            hintText: 'Age',
+                           
                           ),
                           keyboardType: TextInputType.emailAddress,
                         ),
