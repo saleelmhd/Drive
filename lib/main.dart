@@ -1,12 +1,5 @@
 
-import 'package:drive_/ADMIN/AddStudent.dart';
-import 'package:drive_/ADMIN/HomapageAdmin.dart';
-import 'package:drive_/ADMIN/Tutors.dart';
-import 'package:drive_/ADMIN/UpdateStud.dart';
-import 'package:drive_/ADMIN/UpdateTutor.dart';
-import 'package:drive_/STUDENTS/FORMSCREENS/login%20or%20register.dart';
-import 'package:drive_/STUDENTS/StudHome.dart';
-import 'package:drive_/moduleScreen.dart';
+import 'package:drive_/FORMSCREENS/moduleScreen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,9 +8,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-
-  @override
+@override
   Widget build(BuildContext context) {
     return  MaterialApp(
         debugShowCheckedModeBanner: false,

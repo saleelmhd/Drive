@@ -1,12 +1,19 @@
 
-import 'package:drive_/STUDENTS/FORMSCREENS/login1.dart';
-import 'package:drive_/STUDENTS/FORMSCREENS/register.dart';
+import 'package:drive_/FORMSCREENS/login1.dart';
+import 'package:drive_/FORMSCREENS/register.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class LogOrReg extends StatelessWidget {
+class LogOrReg extends StatefulWidget {
+var type;
    LogOrReg({
-    super.key});
+    super.key,required this.type});
+
+  @override
+  State<LogOrReg> createState() => _LogOrRegState();
+}
+
+class _LogOrRegState extends State<LogOrReg> {
   @override
   
   Widget build(BuildContext context) {
@@ -58,7 +65,7 @@ class LogOrReg extends StatelessWidget {
                     Center(
                       child: ElevatedButton(
                         onPressed: () {  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: ((context) =>  Loginn())));},
+                            builder: ((context) =>  Loginn(type: widget.type,))));},
                         style: ElevatedButton.styleFrom(
                           minimumSize:
                               Size(MediaQuery.of(context).size.width, 50),
@@ -77,7 +84,7 @@ class LogOrReg extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {
                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: ((context) => const Reg())));
+                            builder: ((context) =>  Reg())));
                       },
                       style: ElevatedButton.styleFrom(
                         minimumSize:

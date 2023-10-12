@@ -92,7 +92,7 @@ class _AddNewVehicleState extends State<AddNewVehicle> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       TabBarVehicle(
-                        text: 'All',
+                        text: '   All   ',
                         isSelected: selectedTabIndex == 0,
                         onTap: () => onTabSelected(0),
                       ),

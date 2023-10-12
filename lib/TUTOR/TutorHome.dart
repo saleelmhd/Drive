@@ -1,13 +1,20 @@
+
+import 'package:drive_/TUTOR/Mydoc.dart';
+import 'package:drive_/TUTOR/Tutormysessions.dart';
+import 'package:drive_/TUTOR/modelTutorHome.dart';
+import 'package:drive_/TUTOR/mysessionAll%20Tutor.dart';
+import 'package:drive_/TUTOR/mysessions.dart';
+import 'package:drive_/TUTOR/mystudents.dart';
 import 'package:flutter/material.dart';
 
-class HomepagTutor extends StatefulWidget {
-  const HomepagTutor({Key? key});
+class HomePageTutor extends StatefulWidget {
+   const HomePageTutor({super.key});
 
   @override
-  State<HomepagTutor> createState() => _HomepagTutorState();
+  State<HomePageTutor> createState() => _HomePageTutorState();
 }
 
-class _HomepagTutorState extends State<HomepagTutor> {
+class _HomePageTutorState extends State<HomePageTutor> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,8 +24,8 @@ class _HomepagTutorState extends State<HomepagTutor> {
             automaticallyImplyLeading: false,
             floating: true,
             pinned: true,
-            primary: false,
-            expandedHeight: 210,
+            expandedHeight: 190,
+            toolbarHeight: 190,
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(30),
@@ -26,24 +33,22 @@ class _HomepagTutorState extends State<HomepagTutor> {
               ),
             ),
             backgroundColor: const Color.fromRGBO(38, 52, 53, 1),
-            flexibleSpace: Container(
+            flexibleSpace: SizedBox(
               width: MediaQuery.of(context).size.width,
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(30, 30, 0, 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Container(
-                          child: const Padding(
-                            padding: EdgeInsets.only(right: 20.0),
-                            child: Icon(
-                              Icons.notifications,
-                              color: Colors.white,
-                              size: 30,
-                            ),
+                        Padding(
+                          padding: EdgeInsets.only(right: 20.0),
+                          child: Icon(
+                            Icons.notifications,
+                            color: Colors.white,
+                            size: 30,
                           ),
                         ),
                       ],
@@ -56,7 +61,7 @@ class _HomepagTutorState extends State<HomepagTutor> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                      const SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     const Text(
                       "Good Morning...!",
                       style: TextStyle(
@@ -76,10 +81,15 @@ class _HomepagTutorState extends State<HomepagTutor> {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
                               ),
-                              child: const TextField(minLines: 1,maxLines: 5,
+                              child: const TextField(
+                                minLines: 1,
+                                maxLines: 5,
                                 decoration: InputDecoration(
                                   filled: true,
-                                        contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 16), // Adjust the padding here
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 10,
+                                      horizontal:
+                                          16), // Adjust the padding here
 
                                   fillColor:
                                       Color.fromRGBO(255, 255, 255, 0.68),
@@ -104,49 +114,115 @@ class _HomepagTutorState extends State<HomepagTutor> {
               ),
             ),
           ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              childCount: 5,
-              (context, index) => SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color:Color.fromRGBO(247, 243, 240, 1),
-                        borderRadius: BorderRadius.circular(20)),
-                    height: 170,
-                    width: 340,
-                    child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text(
-                              "Sessions",
-                              style: TextStyle(fontFamily: 'Alegreya',
-                                  fontSize: 22, fontWeight: FontWeight.bold),
-                            ),  const SizedBox(
-                              height: 5,
-                            ),
-                            const Text(
-                              "Check your driving \nsessions here",
-                              style: TextStyle(
-                                  fontSize: 12, fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(
-                              height: 12,
-                            ),
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(minimumSize: const Size(120, 40),            backgroundColor: const Color.fromRGBO(38, 52, 53, 1),
-foregroundColor: Colors.white,
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))
+          SliverPadding(
+            padding: const EdgeInsets.only(top: 10),
+            sliver: SliverList(
+              delegate: SliverChildBuilderDelegate(
+                childCount: tutorHome.length,
+                (context, index) => SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: const Color.fromRGBO(247, 243, 240, 1),
+                          borderRadius: BorderRadius.circular(20)),
+                      height: 170,
+                      width: 340,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                height: 34,
+                                width: 144,
+                                child: Text(
+                                  "${tutorHome[index]["Title"]}",
+                                  style: const TextStyle(
+                                      fontFamily: 'Alegreya',
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold),
+                                ),
                               ),
-                                onPressed: () {}, child: const Text("Check Now"))
-                          ],
-                        ),Container(height: 129,width: 107,
-                          child: const Image(image: AssetImage("images/Sessions.png"),fit: BoxFit.cover,))
-                      ],
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              SizedBox(
+                                height: 36,
+                                width: 170,
+                                child: Text(
+                                  "${tutorHome[index]["Subtitle"]}",
+                                  style: const TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 2,
+                              ),
+                              ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      minimumSize: const Size(120, 40),
+                                      backgroundColor:
+                                          const Color.fromRGBO(38, 52, 53, 1),
+                                      foregroundColor: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10))),
+                                  onPressed: () {
+                                    
+                                    switch (index) {
+                                      case 0:
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const MyStudents()));
+                                        break;
+                                      case 1:
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const TutorMysessions()));
+                                        break;
+                                      case 2:
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const MyDocTutor()));
+                                        break;
+                                    }
+                                  },
+                                  child: const Row(
+                                    children: [
+                                      Text("Check Now"),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      CircleAvatar(
+                                        radius: 8,
+                                        backgroundColor: Colors.white,
+                                        foregroundColor: Colors.black,
+                                        child: Icon(
+                                          Icons.arrow_forward,
+                                          size: 11,
+                                        ),
+                                      ),
+                                    ],
+                                  ))
+                            ],
+                          ),
+                          SizedBox(
+                              height: 115,
+                              width: 110,
+                              child: Image(
+                                image:
+                                    AssetImage("${tutorHome[index]["Image"]}"),
+                                fit: BoxFit.cover,
+                              ))
+                        ],
+                      ),
                     ),
                   ),
                 ),

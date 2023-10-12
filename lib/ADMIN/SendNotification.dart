@@ -1,6 +1,7 @@
 import 'package:drive_/ADMIN/ALLsendnotification.dart';
 import 'package:drive_/tabar/tabbaritem.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SendNotification extends StatefulWidget {
   const SendNotification({super.key});
@@ -62,13 +63,13 @@ class _SendNotificationState extends State<SendNotification> {
             ),
           ),
           const SizedBox(height: 10,),
-                      const Text(
+                       Text(
                         "Send notifications",
-                        style: TextStyle(
-                          fontSize: 30,
+                        style:GoogleFonts.alegreya(
+                           fontSize: 30,
                           color: Colors.white,
                           fontWeight: FontWeight.w400,
-                        ),
+                        )
                       ),
                      
                       const SizedBox(height: 10),

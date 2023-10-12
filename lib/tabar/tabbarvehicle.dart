@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class TabBarVehicle extends StatelessWidget {
   final String text;
@@ -17,16 +18,14 @@ class TabBarVehicle extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-            color: isSelected ? Colors.black : Color.fromRGBO(185, 190, 190, 1),
+            color: isSelected ? Colors.black : Color.fromRGBO(227, 227, 227, 1),
             borderRadius: BorderRadius.circular(5)),
         margin: const EdgeInsets.symmetric(vertical: 8),
-        padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 15),
+        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 15),
         child: Text(
           text,
-          style: TextStyle(
-            color: isSelected ? Colors.white : Colors.black,
-            fontWeight: FontWeight.bold,
-          ),
+          style: GoogleFonts.roboto( color: isSelected ? Colors.white : Colors.black,
+            fontWeight: FontWeight.bold,fontSize: 12)
         ),
       ),
     );

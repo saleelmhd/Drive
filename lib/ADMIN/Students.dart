@@ -2,6 +2,7 @@ import 'package:drive_/ADMIN/AddStudent.dart';
 import 'package:drive_/ADMIN/StudALL.dart'; // Import your StudALL widget
 import 'package:drive_/tabar/tabbaritem.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Students extends StatefulWidget {
   const Students({super.key});
@@ -23,104 +24,108 @@ class _StudentsState extends State<Students> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 3,
-      child: Scaffold(  floatingActionButton: Padding(
-        padding: const EdgeInsets.only(right: 15.0),
-        child: SizedBox(
-          height: 50,
-          width: 50,
-          child: FloatingActionButton(highlightElevation: 5,
-            elevation: 1,
-            onPressed: () {Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => AddStud()));
-              // showDialog(
-              //   context: context,
-              //   builder: (BuildContext context) {
-              //     return AlertDialog(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-              //       backgroundColor: Colors.black,
-              //       title: Center(
-              //           child: Text(
-              //         'apply for session'.toUpperCase(),
-              //         style: const TextStyle(color: Colors.white, fontSize: 14),
-              //       )),
-              //       content: Column(
-              //         mainAxisSize: MainAxisSize.min,
-              //         children: [
-              //           ElevatedButton(
-              //               style: ElevatedButton.styleFrom(
-              //                   backgroundColor: Colors.white,
-              //                   foregroundColor: Colors.black,
-              //                   minimumSize: const Size(256, 36),
-              //                   shape: RoundedRectangleBorder(
-              //                       borderRadius: BorderRadius.circular(5))),
-              //               onPressed: () {},
-              //               child: const Row(
-              //                 children: [
-              //                   Text(
-              //                     "Vehicle Type",
-              //                     style: TextStyle(
-              //                         fontSize: 14,
-              //                         fontWeight: FontWeight.w300),
-              //                   ),
-              //                 ],
-              //               )
-              //               ),
-              //                Padding(
-              //                  padding: const EdgeInsets.symmetric(vertical:5.0),
-              //                  child: ElevatedButton(
-              //                                            style: ElevatedButton.styleFrom(
-              //                     backgroundColor: Colors.white,
-              //                     foregroundColor: Colors.black,
-              //                     minimumSize: const Size(256, 36),
-              //                     shape: RoundedRectangleBorder(
-              //                         borderRadius: BorderRadius.circular(5))),
-              //                                            onPressed: () {},
-              //                                            child: const Row(
-              //                   children: [
-              //                     Text(
-              //                       "Select Time & Date",
-              //                       style: TextStyle(
-              //                           fontSize: 14,
-              //                           fontWeight: FontWeight.w300),
-              //                     ),
-              //                   ],
-              //                                            )
-              //                                            ),
-              //                ), ElevatedButton(
-              //               style: ElevatedButton.styleFrom(
-              //                   backgroundColor: Colors.black,
-              //                   foregroundColor: Colors.white,
-              //                   minimumSize: const Size(256, 36),
-              //                   side: const BorderSide(color: Colors.white),
-              //                   shape: RoundedRectangleBorder(
-              //                       borderRadius: BorderRadius.circular(5))),
-              //               onPressed: () {},
-              //               child: const Text(
-              //                 "DONE",
-              //                 style: TextStyle(
-              //                     fontSize: 14,
-              //                     fontWeight: FontWeight.w300),
-              //               )
-              //               ),
-              //         ],
-              //       ),
-                    
-              //     );
-              //   },
-              // );
-            },
-            backgroundColor: Colors.black,
-            foregroundColor: Colors.white,
-            child: const Icon(
-              Icons.add,
-              size: 30,
+      child: Scaffold(
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.only(right: 15.0),
+          child: SizedBox(
+            height: 50,
+            width: 50,
+            child: FloatingActionButton(
+              highlightElevation: 5,
+              elevation: 1,
+              onPressed: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => AddStud()));
+                // showDialog(
+                //   context: context,
+                //   builder: (BuildContext context) {
+                //     return AlertDialog(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                //       backgroundColor: Colors.black,
+                //       title: Center(
+                //           child: Text(
+                //         'apply for session'.toUpperCase(),
+                //         style: const TextStyle(color: Colors.white, fontSize: 14),
+                //       )),
+                //       content: Column(
+                //         mainAxisSize: MainAxisSize.min,
+                //         children: [
+                //           ElevatedButton(
+                //               style: ElevatedButton.styleFrom(
+                //                   backgroundColor: Colors.white,
+                //                   foregroundColor: Colors.black,
+                //                   minimumSize: const Size(256, 36),
+                //                   shape: RoundedRectangleBorder(
+                //                       borderRadius: BorderRadius.circular(5))),
+                //               onPressed: () {},
+                //               child: const Row(
+                //                 children: [
+                //                   Text(
+                //                     "Vehicle Type",
+                //                     style: TextStyle(
+                //                         fontSize: 14,
+                //                         fontWeight: FontWeight.w300),
+                //                   ),
+                //                 ],
+                //               )
+                //               ),
+                //                Padding(
+                //                  padding: const EdgeInsets.symmetric(vertical:5.0),
+                //                  child: ElevatedButton(
+                //                                            style: ElevatedButton.styleFrom(
+                //                     backgroundColor: Colors.white,
+                //                     foregroundColor: Colors.black,
+                //                     minimumSize: const Size(256, 36),
+                //                     shape: RoundedRectangleBorder(
+                //                         borderRadius: BorderRadius.circular(5))),
+                //                                            onPressed: () {},
+                //                                            child: const Row(
+                //                   children: [
+                //                     Text(
+                //                       "Select Time & Date",
+                //                       style: TextStyle(
+                //                           fontSize: 14,
+                //                           fontWeight: FontWeight.w300),
+                //                     ),
+                //                   ],
+                //                                            )
+                //                                            ),
+                //                ), ElevatedButton(
+                //               style: ElevatedButton.styleFrom(
+                //                   backgroundColor: Colors.black,
+                //                   foregroundColor: Colors.white,
+                //                   minimumSize: const Size(256, 36),
+                //                   side: const BorderSide(color: Colors.white),
+                //                   shape: RoundedRectangleBorder(
+                //                       borderRadius: BorderRadius.circular(5))),
+                //               onPressed: () {},
+                //               child: const Text(
+                //                 "DONE",
+                //                 style: TextStyle(
+                //                     fontSize: 14,
+                //                     fontWeight: FontWeight.w300),
+                //               )
+                //               ),
+                //         ],
+                //       ),
+
+                //     );
+                //   },
+                // );
+              },
+              backgroundColor: Colors.black,
+              foregroundColor: Colors.white,
+              child: const Icon(
+                Icons.add,
+                size: 30,
+              ),
             ),
           ),
         ),
-      ),
         backgroundColor: Colors.white,
         body: CustomScrollView(
           slivers: <Widget>[
-            SliverAppBar(automaticallyImplyLeading: false,
+            SliverAppBar(
+              automaticallyImplyLeading: false,
               toolbarHeight: 200,
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
@@ -136,36 +141,38 @@ class _StudentsState extends State<Students> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                       const SizedBox(height: 10,),
-
-                       Card(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            child: Container(
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white30),
-                  borderRadius: BorderRadius.circular(10)),
-              child: IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: const Icon(
-                    Icons.keyboard_arrow_left,
-                    size: 30,
-                  )),
-            ),
-          ),
-          const SizedBox(height: 10,),
-                      const Text(
-                        "Students",
-                        style: TextStyle(
-                          fontSize: 30,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w400,
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white30),
+                              borderRadius: BorderRadius.circular(10)),
+                          child: IconButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              icon: const Icon(
+                                Icons.keyboard_arrow_left,
+                                size: 30,
+                              )),
                         ),
                       ),
-                     
-                      const SizedBox(height: 20),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                       Text(
+                        "Students",
+                        style: GoogleFonts.alegreya(
+                            fontSize: 30,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w400,
+                        )
+                      ),
+                      const SizedBox(height: 10),
                       Row(
                         children: [
                           Expanded(

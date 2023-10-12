@@ -1,14 +1,13 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:drive_/STUDENTS/FORMSCREENS/forgetPassword.dart';
 import 'package:drive_/STUDENTS/StudHome.dart';
-import 'package:drive_/TUTOR/FORMSCREENS/login1.dart';
+import 'package:drive_/TUTOR/TutorHome.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Loginn extends StatefulWidget {
-
-   const Loginn({super.key,});
+  var type;
+    Loginn({super.key,required this.type});
   @override
   State<Loginn> createState() => _LoginnState();
 }
@@ -115,8 +114,8 @@ class _LoginnState extends State<Loginn> {
             children: [
               TextButton(
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: ((context) => const ForgetPassword())));
+                    // Navigator.of(context).push(MaterialPageRoute(
+                    //     builder: ((context) => const ForgetPassword())));
                   },
                   child: Text(
                     "Forget Password ?",
@@ -132,8 +131,17 @@ class _LoginnState extends State<Loginn> {
           ),
           ElevatedButton(
             onPressed: () {
-              Navigator.of(context).pushReplacement(
+
+              switch(widget.type)
+              {
+                case "student":  Navigator.of(context).pushReplacement(
                   MaterialPageRoute(builder: (context) => const HomepagStud()));
+                  break;
+                  case "tutor":Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => const HomePageTutor()));
+                  break;
+              }
+            
             },
             style: ElevatedButton.styleFrom(
               minimumSize: Size(MediaQuery.of(context).size.width, 50),
@@ -152,20 +160,20 @@ class _LoginnState extends State<Loginn> {
           const SizedBox(
             height: 22,
           ),
-          Center(
-            child: GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>LoginnTutor()));
-              },
-              child: Text("Login as Tutor",
-                  style: GoogleFonts.urbanist(
-                    decoration: TextDecoration.underline,
-                    fontSize: 16,
-                 color: const Color.fromRGBO(38, 52, 53, 1),
-                    fontWeight: FontWeight.bold,
-                  )),
-            ),
-          ),
+          // Center(
+          //   child: GestureDetector(
+          //     onTap: () {
+          //       Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const LoginnTutor()));
+          //     },
+          //     child: Text("Login as Tutor",
+          //         style: GoogleFonts.urbanist(
+          //           decoration: TextDecoration.underline,
+          //           fontSize: 16,
+          //        color: const Color.fromRGBO(38, 52, 53, 1),
+          //           fontWeight: FontWeight.bold,
+          //         )),
+          //   ),
+          // ),
           const SizedBox(height: 20,),
         ]),
       ),

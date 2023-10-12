@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:drive_/STUDENTS/FORMSCREENS/CONNECTION/connection.dart';
+import 'package:drive_/FORMSCREENS/CONNECTION/connection.dart';
 import 'package:drive_/STUDENTS/StudHome.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

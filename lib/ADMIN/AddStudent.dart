@@ -11,7 +11,7 @@ class _AddStudState extends State<AddStud> {
   String? _selectedVehicle;
 
   List<String> _vehicles = [
-     '1 whealer',
+    '1 whealer',
     '2 whealer',
     '3 whealer',
     // Add more vehicles as needed
@@ -29,7 +29,8 @@ class _AddStudState extends State<AddStud> {
         centerTitle: true,
         foregroundColor: Colors.black,
         leading: Card(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           child: Container(
             decoration: BoxDecoration(
               border: Border.all(color: Colors.white30),
@@ -57,11 +58,11 @@ class _AddStudState extends State<AddStud> {
               const Stack(
                 children: [
                   CircleAvatar(
-                    radius: 81,
+                    radius: 76,
                     backgroundColor: Colors.white,
                   ),
                   CircleAvatar(
-                    radius: 70,
+                    radius: 65,
                     backgroundImage: AssetImage("images/profilepic.png"),
                   ),
                   Positioned(
@@ -236,7 +237,7 @@ class _AddStudState extends State<AddStud> {
                   ),
                 ),
                 child: Text("Submit".toUpperCase()),
-              ),
+              ),SizedBox(height: 30,),
             ],
           ),
         ),

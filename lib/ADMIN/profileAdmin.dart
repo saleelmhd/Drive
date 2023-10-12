@@ -83,9 +83,9 @@ class _ProfileAdminState extends State<ProfileAdmin> {
                       alignment: Alignment.center,
                       child: const Stack(
                         children: [
-                          CircleAvatar(radius: 67,backgroundColor: Colors.black,
+                          CircleAvatar(radius: 56,backgroundColor: Colors.black,
                             child: CircleAvatar(
-                              radius: 65,
+                              radius: 55,
                               backgroundImage:
                                   AssetImage("images/profileadmin.png"),
                             ),

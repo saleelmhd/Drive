@@ -5,9 +5,11 @@ import 'package:drive_/ADMIN/SendNotification.dart';
 import 'package:drive_/ADMIN/Students.dart';
 import 'package:drive_/ADMIN/Tutors.dart';
 import 'package:drive_/ADMIN/model%20AdminHome.dart';
+import 'package:drive_/ADMIN/profileAdmin.dart';
 import 'package:drive_/ADMIN/sessions.dart';
 import 'package:drive_/STUDENTS/Trail%20Appointment.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomapageAdmin extends StatefulWidget {
   const HomapageAdmin({super.key});
@@ -24,8 +26,9 @@ class _HomapageAdminState extends State<HomapageAdmin> {
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
-            toolbarHeight: 180,
-            expandedHeight: 180,
+            automaticallyImplyLeading: false,
+             toolbarHeight: 200,
+            expandedHeight: 200,
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(30),
@@ -44,7 +47,7 @@ class _HomapageAdminState extends State<HomapageAdmin> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: const [
-                         Padding(
+                        Padding(
                           padding: EdgeInsets.only(right: 20.0),
                           child: Icon(
                             Icons.notifications,
@@ -54,23 +57,31 @@ class _HomapageAdminState extends State<HomapageAdmin> {
                         ),
                       ],
                     ),
-                    const Text(
-                      "Perinthalmanna",
-                      style: TextStyle(
-                        fontSize: 25,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400,
+
+                    
+                    GestureDetector(
+                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const ProfileAdmin())),
+                      child:  Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Perinthalmanna",
+                            style: GoogleFonts.alegreya( fontSize: 35,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w400,)
+                          ),
+                          SizedBox(height: 5),
+                          Text(
+                            "ISS COLLEGE DRIVING SCHOOL",
+                            style:GoogleFonts.alegreyaSans(  fontSize: 16,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w400,)
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(height: 5),
-                    const Text(
-                      "ISS COLLEGE DRIVING SCHOOL",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
+                    
                     const SizedBox(height: 20),
                     Row(
                       children: [
@@ -110,7 +121,8 @@ class _HomapageAdminState extends State<HomapageAdmin> {
               ),
             ),
             pinned: true,
-            floating: true,
+            floating: false,
+            
           ),
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
@@ -123,43 +135,42 @@ class _HomapageAdminState extends State<HomapageAdmin> {
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
                   return GestureDetector(
-                  onTap: () {
-        switch (index) {
-          case 0:
-             Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => const Students()));         
-          break;
-          case 1:
-             Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => const Tutors()));         
-          break;
-          case 2:
-             Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => const AddNewVehicle()));         
-          break;
-          case 3:
-             Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => const SessionsAdmin()));         
-          break;
-          case 4:
-             Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => const TrailAppointment()));         
-          break;
-          case 5:
-             Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => const Qbank()));         
-          break;
-          case 6:
-             Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => const Quiz()));         
-          break;
-          case 7:
-             Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => const SendNotification()));         
-          break;
-         
-        }
-      },
+                    onTap: () {
+                      switch (index) {
+                        case 0:
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const Students()));
+                          break;
+                        case 1:
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const Tutors()));
+                          break;
+                        case 2:
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const AddNewVehicle()));
+                          break;
+                        case 3:
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const SessionsAdmin()));
+                          break;
+                        case 4:
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const TrailAppointment()));
+                          break;
+                        case 5:
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const Qbank()));
+                          break;
+                        case 6:
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const Quiz()));
+                          break;
+                        case 7:
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const SendNotification()));
+                          break;
+                      }
+                    },
                     child: GridTile(
                       child: Container(
                         decoration: BoxDecoration(
@@ -172,15 +183,14 @@ class _HomapageAdminState extends State<HomapageAdmin> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SizedBox(
-                              height: 42,
-                              width: 46,
-                              child: Image(
-                                image: AssetImage(
-                                  "${ADMINHome[index]["Image"]}",
-                                ),
-                                fit: BoxFit.cover,
-                              ),
+                            Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage(
+                                "${ADMINHome[index]["Image"]}",
+                              ))),
                             ),
                             const SizedBox(
                               height: 5,
