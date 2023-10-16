@@ -84,7 +84,7 @@ class _LogOrRegState extends State<LogOrReg> {
                     ElevatedButton(
                       onPressed: () {
                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: ((context) =>  Reg())));
+                            builder: ((context) =>  Reg(type: widget.type,))));
                       },
                       style: ElevatedButton.styleFrom(
                         minimumSize:

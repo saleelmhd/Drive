@@ -1,14 +1,17 @@
 import 'dart:convert';
 
 import 'package:drive_/FORMSCREENS/CONNECTION/connection.dart';
+import 'package:drive_/FORMSCREENS/login1.dart';
 import 'package:drive_/STUDENTS/StudHome.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 
 class Reg extends StatefulWidget {
-  const Reg({super.key});
+  var type;
+   Reg({super.key,required this.type});
 
   @override
   State<Reg> createState() => _RegState();
@@ -28,20 +31,37 @@ class _RegState extends State<Reg> {
   var sex = TextEditingController();
   var mail = TextEditingController();
   var phone = TextEditingController();
-  final formkey = GlobalKey<FormState>();
+  // final formkey = GlobalKey<FormState>();
 
   Future<void> register() async {
     var data = {
       'name': name.text,
       'age': age.text,
-      'sex': sex.text,
+      'sex': _selected.toString(),
       'email': mail.text,
       'phone': phone.text,
     };
+    print(data);
       var response =
           await post(Uri.parse('${Con.url}/registration.php'), body: data);
+          print(response.statusCode);
       print(response.body);
-      jsonDecode(response.body);
+      var res=jsonDecode(response.body);
+      if(res["result"]=='Success'){
+         ScaffoldMessenger.of(context)
+       .showSnackBar(SnackBar(content: Text('Registered Successfully',style: TextStyle(color: Colors.red),)));
+    //   Fluttertoast.showToast(
+    //     msg: "Register Successfully",
+    //     toastLength: Toast.LENGTH_SHORT,
+    //     gravity: ToastGravity.CENTER,
+    //     timeInSecForIosWeb: 1,
+    //     backgroundColor: Colors.red,
+    //     textColor: Colors.white,
+    //     fontSize: 16.0
+    // );
+ Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) =>  Loginn(type: widget.type,)));
+
       // if (jsonDecode(response.body)['result'] == 'Success') {
       //   ScaffoldMessenger.of(context)
       //       .showSnackBar(SnackBar(content: Text('Registered Successfully',style: TextStyle(color: Colors.red),)));
@@ -52,7 +72,7 @@ class _RegState extends State<Reg> {
       //   Navigator.pop(context);
       // }
   }
-
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -182,6 +202,7 @@ class _RegState extends State<Reg> {
                 }).toList(),
                 onChanged: (String? newValue) {
                   setState(() {
+
                     _selected = newValue;
                   });
                 },
@@ -234,20 +255,29 @@ class _RegState extends State<Reg> {
                 ),
                 ElevatedButton(
                   onPressed: () {
+                     register();
                           print(name.text);
                             print(phone.text);
                             print(mail.text);
                              print(age.text);
-                              print(sex.text);
+                              print(_selected);
                               
-                           register();
-                           
+                          
+              //              switch(widget.type)
+              // {
+              //   case "student":  Navigator.of(context).pushReplacement(
+              //     MaterialPageRoute(builder: (context) =>  Loginn(type: widget.type,)));
+              //     break;
+              //     case "tutor":Navigator.of(context).pushReplacement(
+              //     MaterialPageRoute(builder: (context) =>  Loginn(type: widget.type,)));
+              //     break;
+              // }  
                     
 
+      
 
 
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const HomepagStud()));
+                  
                   },
                   style: ElevatedButton.styleFrom(
                     minimumSize: Size(MediaQuery.of(context).size.width, 50),
@@ -269,3 +299,4 @@ class _RegState extends State<Reg> {
         ));
   }
 }
+

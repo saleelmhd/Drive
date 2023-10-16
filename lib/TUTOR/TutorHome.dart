@@ -2,8 +2,6 @@
 import 'package:drive_/TUTOR/Mydoc.dart';
 import 'package:drive_/TUTOR/Tutormysessions.dart';
 import 'package:drive_/TUTOR/modelTutorHome.dart';
-import 'package:drive_/TUTOR/mysessionAll%20Tutor.dart';
-import 'package:drive_/TUTOR/mysessions.dart';
 import 'package:drive_/TUTOR/mystudents.dart';
 import 'package:flutter/material.dart';
 
