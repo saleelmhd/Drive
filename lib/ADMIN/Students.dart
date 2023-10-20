@@ -35,7 +35,7 @@ class _StudentsState extends State<Students> {
               elevation: 1,
               onPressed: () {
                 Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => AddStud()));
+                    .push(MaterialPageRoute(builder: (context) => AddStud(type: 'student',)));
                 // showDialog(
                 //   context: context,
                 //   builder: (BuildContext context) {

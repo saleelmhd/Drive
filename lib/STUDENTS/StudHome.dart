@@ -5,13 +5,14 @@ import 'package:drive_/STUDENTS/quizhome.dart';
 import 'package:flutter/material.dart';
 
 class HomepagStud extends StatefulWidget {
-  const HomepagStud({super.key});
+   HomepagStud({super.key});
 
   @override
   State<HomepagStud> createState() => _HomepagStudState();
 }
 
 class _HomepagStudState extends State<HomepagStud> {
+  bool?isvisible=true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

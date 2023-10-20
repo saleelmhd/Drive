@@ -1,3 +1,4 @@
+import 'package:drive_/ADMIN/AddTutor.dart';
 import 'package:drive_/ADMIN/TutorsALL.dart';
 import 'package:drive_/tabar/tabbaritem.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,7 @@ class _TutorsState extends State<Tutors> {
           child: FloatingActionButton(highlightElevation: 5,
             elevation: 1,
             onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: ((context) => AddTtutor(type:'Tutor'))));
               // showDialog(
               //   context: context,
               //   builder: (BuildContext context) {

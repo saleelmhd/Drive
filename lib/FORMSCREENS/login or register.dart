@@ -1,6 +1,5 @@
 
 import 'package:drive_/FORMSCREENS/login1.dart';
-import 'package:drive_/FORMSCREENS/register.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -24,7 +23,7 @@ class _LogOrRegState extends State<LogOrReg> {
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
+            children: [SizedBox(height: 50,),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
@@ -78,35 +77,15 @@ class _LogOrRegState extends State<LogOrReg> {
                         child:  Text("Login",style: (GoogleFonts.urbanist(fontSize:15,fontWeight: FontWeight.w600 )),),
                       ),
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                       Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: ((context) =>  Reg(type: widget.type,))));
-                      },
-                      style: ElevatedButton.styleFrom(
-                        minimumSize:
-                            Size(MediaQuery.of(context).size.width, 50),
-                        side: const BorderSide(color: Colors.black),
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(10),
-                          ),
-                        ),
-                        foregroundColor: Colors.black,
-                        backgroundColor: Colors.white,
-                      ),
-                      child:  Text("Register",style: (GoogleFonts.urbanist(fontSize:15,fontWeight: FontWeight.w600 )),),
-                    ),
+                   
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 180,
-              ),
-               Column(
+             
+              Container(
+              height: 220,
+                child: 
+               Column(mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
                     "By continuing ,you agree to our",
@@ -121,7 +100,7 @@ class _LogOrRegState extends State<LogOrReg> {
                    
                   ),
                 ],
-              )
+              ),)
             ],
           ),
         ),
