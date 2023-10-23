@@ -3,16 +3,20 @@ import 'package:drive_/STUDENTS/mydocuments.dart';
 import 'package:drive_/STUDENTS/mysessions.dart';
 import 'package:drive_/STUDENTS/quizhome.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomepagStud extends StatefulWidget {
-   HomepagStud({super.key});
+  var skip;
+   HomepagStud({super.key,required this.skip});
 
   @override
   State<HomepagStud> createState() => _HomepagStudState();
 }
 
 class _HomepagStudState extends State<HomepagStud> {
+ 
   bool?isvisible=true;
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,23 +55,19 @@ class _HomepagStudState extends State<HomepagStud> {
                         ),
                       ],
                     ),
-                    const Text(
+                     Text(
                       "Hello User",
-                      style: TextStyle(
-                        fontSize: 25,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                       style:GoogleFonts.alegreya(
+                                      fontSize: 30,color: Colors.white,
+                                      fontWeight: FontWeight.w400),),
+                    
                     const SizedBox(height: 5),
-                    const Text(
+                     Text(
                       "Good Morning...!",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                     style:GoogleFonts.alegreyaSans(
+                                      fontSize: 17,color: Colors.white,
+                                      fontWeight: FontWeight.w400),)
+                    ,
                     const SizedBox(height: 20),
                     Row(
                       children: [
@@ -113,14 +113,23 @@ class _HomepagStudState extends State<HomepagStud> {
             ),
           ),
           SliverPadding(
-            padding: const EdgeInsets.only(top: 10),
+            padding:  const EdgeInsets.only(top: 10),
             sliver: SliverList(
               delegate: SliverChildBuilderDelegate(
                 childCount: studHome.length,
-                (context, index) => SingleChildScrollView(
+                (context, index) {
+                    if (widget.skip&& (index == 0 || index == 1)) {
+                
+               
+                return const SizedBox();
+                
+              } else {
+                      return SingleChildScrollView(
+                  
                   child: Padding(
                     padding: const EdgeInsets.all(15.0),
-                    child: Container(
+                    child:
+                     Container(
                       decoration: BoxDecoration(
                           color: const Color.fromRGBO(247, 243, 240, 1),
                           borderRadius: BorderRadius.circular(20)),
@@ -134,32 +143,30 @@ class _HomepagStudState extends State<HomepagStud> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                height: 34,
-                                width: 144,
-                                child: Text(
+                                height: 30,
+                             
+                                child:Text(
                                   "${studHome[index]["Title"]}",
-                                  style: const TextStyle(
-                                      fontFamily: 'Alegreya',
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
+                                  style:GoogleFonts.urbanist(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),)
+                                     
+                                )
+                              ,
                               const SizedBox(
                                 height: 5,
                               ),
                               Container(
-                                height: 36,
-                                width: 170,
+                                height: 35,
+                                width: 180,
                                 child: Text(
                                   "${studHome[index]["Subtitle"]}",
-                                  style: const TextStyle(
+                                style:GoogleFonts.urbanist(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
-                              const SizedBox(
-                                height: 2,
-                              ),
+                             
                               ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                       minimumSize: const Size(120, 40),
@@ -221,9 +228,10 @@ class _HomepagStudState extends State<HomepagStud> {
                               ))
                         ],
                       ),
-                    ),
+                                       )
                   ),
-                ),
+                    );
+                    }}
               ),
             ),
           ),

@@ -14,8 +14,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return  MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:HomapageAdmin(),
-      //  Module(),
+      home:
+       Module(),
 
       //  AnimatedSplashScreen(
       //   splash: RichText(

@@ -19,96 +19,9 @@ class Loginn extends StatefulWidget {
 }
 
 bool _isPasswordVisible = false;
-
 class _LoginnState extends State<Loginn> {
   TextEditingController idController = TextEditingController();
-    TextEditingController passcontrol = TextEditingController();
-
-
-  int _randomID = 0;
-
-  void generateRandomID() {
-    setState(() {
-      final random = Random();
-      _randomID =
-          random.nextInt(90000) + 10000; // Generates a random 5-digit number
-      idController.text = _randomID.toString();
-    });
-  }
-   Future<void> login() async {
-    var data = {
-      'name': idController.text,
-     'password':passcontrol.text,
-      'type': widget.type,
-    };
-    print(data);
-    var response =
-        await post(Uri.parse('${Con.url}/registration.php'), body: data);
-    print(response.statusCode);
-    print(response.body);
-    var res = jsonDecode(response.body);
-    // final namekeyy = _namekey.currentState!.validate();
-    // final agekeyy = _ageKey.currentState!.validate();
-    // final mailkeyy = _mailKey.currentState!.validate();
-    // final numberkeyy = _numberKey.currentState!.validate();
-
-    if (res["result"] == 'Success'
-    //  &&
-    //     namekeyy &&
-    //     agekeyy &&
-    //     mailkeyy &&
-    //     numberkeyy
-        )
-         {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          margin: const EdgeInsets.symmetric(horizontal: 70, vertical: 15),
-          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-          content: const Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.check, color: Colors.white),
-              SizedBox(width: 10),
-              Text(
-                'Login Successfully',
-                style: TextStyle(color: Colors.white),
-              ),
-            ],
-          ),
-          backgroundColor: Colors.green,
-          behavior: SnackBarBehavior.floating,
-          elevation: 4.0,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-          duration: const Duration(seconds: 3),
-        ),
-      );
-      switch (widget.type) {
-                  case "student":
-                    Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) => HomepagStud()));
-                    break;
-                  case "tutor":
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => const HomePageTutor()));
-                    break;
-                }
-      idController.clear();
-     
-
-      // if (jsonDecode(response.body)['result'] == 'Success') {
-      //   ScaffoldMessenger.of(context)
-      //       .showSnackBar(SnackBar(content: Text('Registered Successfully',style: TextStyle(color: Colors.red),)));
-      //   Navigator.pop(context);
-      // } else {
-      //   ScaffoldMessenger.of(context)
-      //       .showSnackBar(SnackBar(content: Text('Registration Failed')));
-      //   Navigator.pop(context);
-      // }
-    }
-  }
-
-
+  TextEditingController passcontrol = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -119,9 +32,15 @@ class _LoginnState extends State<Loginn> {
           Padding(
             padding: const EdgeInsets.only(right: 20.0, top: 15),
             child: ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => HomepagStud()));
+              onPressed: () {switch(widget.type){
+                case 'student': Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => HomepagStud(skip:true,)));
+                    break;
+                      case 'tutor': Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => HomePageTutor(skipp:true,)));
+                    break;
+              }
+               
               },
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(100, 10),
@@ -172,37 +91,6 @@ class _LoginnState extends State<Loginn> {
             const SizedBox(
               height: 50,
             ),
-            const Text('Your Login ID:'),
-            Padding(
-              padding: const EdgeInsets.only(top: 10),
-              child: Container(
-                height: 50,
-                width: 100,
-                child: TextFormField(
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.only(left: 25)),
-                  controller: idController,
-                  readOnly: true,
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            Row(
-              children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(50, 50), backgroundColor: Colors.black),
-                  onPressed: generateRandomID,
-                  child: const Text('Generate ID'),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 50,
-            ),
             TextFormField(
               controller: idController,
               decoration: InputDecoration(
@@ -220,11 +108,12 @@ class _LoginnState extends State<Loginn> {
               height: 20,
             ),
             Form(
-              child: TextFormField(controller: passcontrol,
+              child: TextFormField(
+                controller: passcontrol,
                 obscureText: !_isPasswordVisible,
                 decoration: InputDecoration(
-                  border:
-                      OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10)),
                   filled: true,
                   fillColor: const Color.fromRGBO(247, 248, 249, 1),
                   hintText: 'Enter Your Password',
@@ -270,8 +159,17 @@ class _LoginnState extends State<Loginn> {
             ),
             ElevatedButton(
               onPressed: () {
-                 login() ;
-               
+                switch (widget.type) {
+                  case "student":
+                    Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (context) => HomepagStud(skip: false,)));
+                    break;
+                  case "tutor":
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) =>  HomePageTutor(skipp: false,)));
+                    break;
+                }
+                idController.clear();
               },
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(MediaQuery.of(context).size.width, 50),
