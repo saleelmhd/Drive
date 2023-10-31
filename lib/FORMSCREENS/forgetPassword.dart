@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class ForgetPassword extends StatefulWidget {
+  class ForgetPassword extends StatefulWidget {
   var type;
    ForgetPassword({super.key,required this.type});
 
@@ -28,8 +28,9 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 ),
               ),
               TextFormField(
-                decoration: InputDecoration(border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                 
+
+                  decoration: InputDecoration(border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+              
                   filled: true,
                   fillColor: Colors.white,
                   hintText: 'Enter Phone Number',

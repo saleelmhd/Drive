@@ -1,12 +1,10 @@
-
 import 'package:drive_/FORMSCREENS/login1.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LogOrReg extends StatefulWidget {
-var type;
-   LogOrReg({
-    super.key,required this.type});
+  var type;
+  LogOrReg({super.key, required this.type});
 
   @override
   State<LogOrReg> createState() => _LogOrRegState();
@@ -14,7 +12,6 @@ var type;
 
 class _LogOrRegState extends State<LogOrReg> {
   @override
-  
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -23,7 +20,10 @@ class _LogOrRegState extends State<LogOrReg> {
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [SizedBox(height: 50,),
+            children: [
+              SizedBox(
+                height: 50,
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
@@ -63,8 +63,13 @@ class _LogOrRegState extends State<LogOrReg> {
                     ),
                     Center(
                       child: ElevatedButton(
-                        onPressed: () {  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: ((context) =>  Loginn(type: widget.type,))));},
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushReplacement(MaterialPageRoute(
+                                  builder: ((context) => Loginn(
+                                        type: widget.type,
+                                      ))));
+                        },
                         style: ElevatedButton.styleFrom(
                           minimumSize:
                               Size(MediaQuery.of(context).size.width, 50),
@@ -74,33 +79,36 @@ class _LogOrRegState extends State<LogOrReg> {
                             borderRadius: BorderRadius.all(Radius.circular(10)),
                           ),
                         ),
-                        child:  Text("Login",style: (GoogleFonts.urbanist(fontSize:15,fontWeight: FontWeight.w600 )),),
+                        child: Text(
+                          "Login",
+                          style: (GoogleFonts.urbanist(
+                              fontSize: 15, fontWeight: FontWeight.w600)),
+                        ),
                       ),
                     ),
-                   
                   ],
                 ),
               ),
-             
               Container(
-              height: 220,
-                child: 
-               Column(mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    "By continuing ,you agree to our",
-                    style:GoogleFonts.poppins(fontSize: 10,fontWeight: FontWeight.w400)
-                  ),
-                  Text(
-                    "Terms & Conditions",
-                    style:GoogleFonts.urbanist( decoration: TextDecoration.underline,
-                      fontSize: 13,
-                      color: Color.fromRGBO(38, 52, 53, 1),
-                      fontWeight: FontWeight.w700,),
-                   
-                  ),
-                ],
-              ),)
+                height: 220,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text("By continuing ,you agree to our",
+                        style: GoogleFonts.poppins(
+                            fontSize: 10, fontWeight: FontWeight.w400)),
+                    Text(
+                      "Terms & Conditions",
+                      style: GoogleFonts.urbanist(
+                        decoration: TextDecoration.underline,
+                        fontSize: 13,
+                        color: Color.fromRGBO(38, 52, 53, 1),
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
+                ),
+              )
             ],
           ),
         ),

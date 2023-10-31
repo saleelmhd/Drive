@@ -37,8 +37,15 @@ class _RegState extends State<Reg> {
   final _ageKey = GlobalKey<FormState>();
   final _mailKey = GlobalKey<FormState>();
   final _numberKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
+  
+    // final namekeyy = _namekey.currentState!.validate();
+    // final agekeyy = _ageKey.currentState!.validate();
+    // final mailkeyy = _mailKey.currentState!.validate();
+    // final numberkeyy = _numberKey.currentState!.validate();
 
   Future<void> register() async {
+
     var data = {
       'name': name.text,
       'age': age.text,
@@ -53,16 +60,8 @@ class _RegState extends State<Reg> {
     print(response.statusCode);
     print(response.body);
     var res = jsonDecode(response.body);
-    final namekeyy = _namekey.currentState!.validate();
-    final agekeyy = _ageKey.currentState!.validate();
-    final mailkeyy = _mailKey.currentState!.validate();
-    final numberkeyy = _numberKey.currentState!.validate();
 
-    if (res["result"] == 'Success' &&
-        namekeyy &&
-        agekeyy &&
-        mailkeyy &&
-        numberkeyy) {
+    if (res["result"] == 'Success'  ) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           margin: const EdgeInsets.symmetric(horizontal: 70, vertical: 15),
@@ -137,57 +136,57 @@ class _RegState extends State<Reg> {
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(20, 0, 20, 15),
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 30,
-                ),
-                Stack(
-                  children: [
-                    const CircleAvatar(
-                      radius: 81,
-                      backgroundColor: Colors.white,
-                    ),
-                    widget.type == 'student'
-                        ? const CircleAvatar(
-                            radius: 70,
-                            backgroundImage:
-                                AssetImage("images/profilepic.png"),
-                          )
-                        : const CircleAvatar(
-                            radius: 70,
-                            backgroundImage:
-                                AssetImage("images/profiletutor.png"),
-                          ),
-                    const Positioned(
-                        right: 0,
-                        top: 40,
-                        child: CircleAvatar(
-                          radius: 20,
-                        )),
-                    const Positioned(
-                        right: 0,
-                        top: 40,
-                        child: CircleAvatar(
-                          backgroundColor: Colors.white,
-                          child: CircleAvatar(
-                            foregroundColor: Colors.white,
-                            radius: 17,
-                            backgroundColor: Color.fromRGBO(38, 52, 53, 1),
-                            child: Icon(
-                              Icons.edit,
-                              size: 17,
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Stack(
+                    children: [
+                      const CircleAvatar(
+                        radius: 81,
+                        backgroundColor: Colors.white,
+                      ),
+                      widget.type == 'student'
+                          ? const CircleAvatar(
+                              radius: 70,
+                              backgroundImage:
+                                  AssetImage("images/profilepic.png"),
+                            )
+                          : const CircleAvatar(
+                              radius: 70,
+                              backgroundImage:
+                                  AssetImage("images/profiletutor.png"),
                             ),
-                          ),
-                        ))
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Form(
-                  key: _namekey,
-                  child: TextFormField(
+                      const Positioned(
+                          right: 0,
+                          top: 40,
+                          child: CircleAvatar(
+                            radius: 20,
+                          )),
+                      const Positioned(
+                          right: 0,
+                          top: 40,
+                          child: CircleAvatar(
+                            backgroundColor: Colors.white,
+                            child: CircleAvatar(
+                              foregroundColor: Colors.white,
+                              radius: 17,
+                              backgroundColor: Color.fromRGBO(38, 52, 53, 1),
+                              child: Icon(
+                                Icons.edit,
+                                size: 17,
+                              ),
+                            ),
+                          ))
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
                       controller: name,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
@@ -215,106 +214,103 @@ class _RegState extends State<Reg> {
                         }
                         return null;
                       }
-
+            
                       // Inside your form submission function, you can use the validateName function
-
+            
                       ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width / 2,
-                        child: Form(
-                          key: _ageKey,
-                          child: TextFormField(
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Please enter your age';
-                              }
-                              if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
-                                return 'Age must be a number';
-                              }
-                              int? age = int.tryParse(value);
-                              if (age == null) {
-                                return 'Invalid age';
-                              }
-                              if (age < 10) {
-                                return 'Age must be greater than 10';
-                              }
-                              return null;
-                              
-                            },
-                            controller: age,
-                            decoration: InputDecoration(
-                             
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10)),
-                              filled: true,
-                              fillColor: const Color.fromRGBO(247, 248, 249, 1),
-                              hintText: 'Age',
-                              hintStyle: GoogleFonts.urbanist(
-                                  fontSize: 15, fontWeight: FontWeight.w300),
-                            ),
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(2)
-                            ],
-                            onChanged: (value) {
-                              if (value.length == 10) {
-                                FocusScope.of(context).nextFocus();
-                              }
-                            },
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                        child: SizedBox(
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 20.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        SizedBox(
                           width: MediaQuery.of(context).size.width / 2,
-                          child: DropdownButtonFormField<String>(
-                            borderRadius: BorderRadius.circular(20),
-                            value: _selected,
-                            items: _sex.map((String gender) {
-                              return DropdownMenuItem<String>(
-                                value: gender,
-                                child: Text(gender),
-                              );
-                            }).toList(),
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                _selected = newValue;
-                              });
-                            },
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: const Color.fromRGBO(247, 248, 249, 1),
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 17, horizontal: 10),
-                              hintText: "Sex",
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      10)), // Add a border
-                            ),
-                            padding: EdgeInsets.only(
-                              bottom: _ageKey.currentState?.validate() ?? true
-                                  ? 0
-                                  : 20,
-                              left: 0,
+                          child: Form(
+                            key: _ageKey,
+                            child: TextFormField(
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Please enter your age';
+                                }
+                                if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+                                  return 'Age must be a number';
+                                }
+                                int? age = int.tryParse(value);
+                                if (age == null) {
+                                  return 'Invalid age';
+                                }
+                                if (age < 10) {
+                                  return 'Age must be greater than 10';
+                                }
+                                return null;
+                                
+                              },
+                              controller: age,
+                              decoration: InputDecoration(
+                               
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                filled: true,
+                                fillColor: const Color.fromRGBO(247, 248, 249, 1),
+                                hintText: 'Age',
+                                hintStyle: GoogleFonts.urbanist(
+                                    fontSize: 15, fontWeight: FontWeight.w300),
+                              ),
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                LengthLimitingTextInputFormatter(2)
+                              ],
+                              onChanged: (value) {
+                                if (value.length == 10) {
+                                  FocusScope.of(context).nextFocus();
+                                }
+                              },
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width / 2,
+                            child: DropdownButtonFormField<String>(
+                              borderRadius: BorderRadius.circular(20),
+                              value: _selected,
+                              items: _sex.map((String gender) {
+                                return DropdownMenuItem<String>(
+                                  value: gender,
+                                  child: Text(gender),
+                                );
+                              }).toList(),
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  _selected = newValue;
+                                });
+                              },
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: const Color.fromRGBO(247, 248, 249, 1),
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 17, horizontal: 10),
+                                hintText: "Sex",
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        10)), // Add a border
+                              ),
+                              padding: EdgeInsets.only(
+                                bottom: _ageKey.currentState?.validate() ?? true
+                                    ? 0
+                                    : 20,
+                                left: 0,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                Form(
-                  key: _mailKey,
-                  child: TextFormField(
+                  TextFormField(
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Please enter an email address';
@@ -337,11 +333,8 @@ class _RegState extends State<Reg> {
                     ),
                     keyboardType: TextInputType.emailAddress,
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  child: Form(
-                    key: _numberKey,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 20.0),
                     child: TextFormField(
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -350,7 +343,7 @@ class _RegState extends State<Reg> {
                         if (!RegExp(r'^\d{10}$').hasMatch(value)) {
                           return 'Invalid phone number format';
                         }
-
+            
                         return null;
                       },
                       controller: phone,
@@ -367,43 +360,46 @@ class _RegState extends State<Reg> {
                       inputFormatters: [LengthLimitingTextInputFormatter(10)],
                     ),
                   ),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    register();
-                    print(name.text);
-                    print(phone.text);
-                    print(mail.text);
-                    print(age.text);
-                    print(_selected);
-
-                    //              switch(widget.type)
-                    // {
-                    //   case "student":  Navigator.of(context).pushReplacement(
-                    //     MaterialPageRoute(builder: (context) =>  Loginn(type: widget.type,)));
-                    //     break;
-                    //     case "tutor":Navigator.of(context).pushReplacement(
-                    //     MaterialPageRoute(builder: (context) =>  Loginn(type: widget.type,)));
-                    //     break;
-                    // }
-
-                    // Process the name (e.g., save to a database, show a message)
-                  },
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: Size(MediaQuery.of(context).size.width, 50),
-                    backgroundColor: const Color.fromRGBO(38, 52, 53, 1),
-                    foregroundColor: Colors.white,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ElevatedButton(
+                    onPressed: () {
+                      if( _formKey.currentState!.validate()){
+                      register();
+            
+                      }
+                      print(name.text);
+                      print(phone.text);
+                      print(mail.text);
+                      print(age.text);
+                      print(_selected);
+            
+                      //              switch(widget.type)
+                      // {
+                      //   case "student":  Navigator.of(context).pushReplacement(
+                      //     MaterialPageRoute(builder: (context) =>  Loginn(type: widget.type,)));
+                      //     break;
+                      //     case "tutor":Navigator.of(context).pushReplacement(
+                      //     MaterialPageRoute(builder: (context) =>  Loginn(type: widget.type,)));
+                      //     break;
+                      // }
+            
+                      // Process the name (e.g., save to a database, show a message)
+                    },
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size(MediaQuery.of(context).size.width, 50),
+                      backgroundColor: const Color.fromRGBO(38, 52, 53, 1),
+                      foregroundColor: Colors.white,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
+                    ),
+                    child: Text(
+                      "Submit",
+                      style: (GoogleFonts.urbanist(
+                          fontSize: 15, fontWeight: FontWeight.w600)),
                     ),
                   ),
-                  child: Text(
-                    "Submit",
-                    style: (GoogleFonts.urbanist(
-                        fontSize: 15, fontWeight: FontWeight.w600)),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ));
