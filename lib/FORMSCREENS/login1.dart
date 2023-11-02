@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:drive_/CONNECTION/connection.dart';
 import 'package:drive_/FORMSCREENS/forgetPassword.dart';
+import 'package:drive_/SHAREDPREFERENCES/sharedPref.dart';
 import 'package:drive_/STUDENTS/StudHome.dart';
 import 'package:drive_/TUTOR/TutorHome.dart';
 import 'package:flutter/material.dart';
@@ -40,10 +41,13 @@ class _LoginnState extends State<Loginn> {
     var user_id;
     user_id = jsonDecode(response.body)['log_id'];
     print('...........................................$user_id');
+    SharedPreferencesHelper.saveData(user_id)
+        .then((value) => print('SPsaved'))
+        .catchError((e) {
+      print('SP Not Saved $e');
+    });
 
     if (jsonDecode(response.body)['result'] == 'User successfully login') {
-      // final spref = await SharedPreferences.getInstance();
-      //   spref.setString('regi_id', user_id);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         margin: const EdgeInsets.symmetric(horizontal: 80, vertical: 15),
         padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),

@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:drive_/CONNECTION/connection.dart';
+import 'package:drive_/SHAREDPREFERENCES/sharedPref.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -51,7 +52,7 @@ class _AddStudState extends State<AddStud> {
       _IDController.text = RandomIDGenerator.generateRandomID();
     });
   }
-
+var Lid;
   final _formkey = GlobalKey<FormState>();
   // final _ageKey = GlobalKey<FormState>();
   // final _mailKey = GlobalKey<FormState>();
@@ -78,6 +79,8 @@ class _AddStudState extends State<AddStud> {
       'vehicle': _isselected.toString(),
       'gen_ID': _IDController.text,
       'type': widget.type,
+      'AdminID':Lid.toString(),
+
     };
     print(data);
     var response =
@@ -153,6 +156,12 @@ class _AddStudState extends State<AddStud> {
     mail.addListener(_updateEmailFieldEmpty);
     phone.addListener(_updateNumberFieldEmpty);
     dateController.addListener(_updateJoinedFieldEmpty);
+
+    SharedPreferencesHelper.getSavedData().then((value) {
+      setState(() {
+        Lid=value;
+      });
+    });print('lid=$Lid');
   }
 
   void _updateNameFieldEmpty() {
@@ -705,6 +714,30 @@ class _AddStudState extends State<AddStud> {
                         print(phone.text);
                         print(dateController.text);
                         print(_isselected);
+                      }else{
+                        
+                         ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          margin: const EdgeInsets.symmetric(horizontal: 90, vertical: 15),
+          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+          content: const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.error, color: Colors.white),
+              SizedBox(width: 10),
+              Text(
+                'invalid Credentials',
+                style: TextStyle(color: Colors.white),
+              ),
+            ],
+          ),
+          backgroundColor: Colors.red,
+          behavior: SnackBarBehavior.floating,
+          elevation: 4.0,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          duration: const Duration(seconds: 3),
+        ),);
                       }
 
                       //              switch(widget.type)

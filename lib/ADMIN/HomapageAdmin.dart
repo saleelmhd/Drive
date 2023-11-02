@@ -1,4 +1,4 @@
-import 'package:drive_/ADMIN/AddnewVehicle.dart';
+import 'package:drive_/ADMIN/Vehicle.dart';
 import 'package:drive_/ADMIN/QuestionBank.dart';
 import 'package:drive_/ADMIN/Quiz.dart';
 import 'package:drive_/ADMIN/SendNotification.dart';
@@ -147,7 +147,7 @@ class _HomapageAdminState extends State<HomapageAdmin> {
                           break;
                         case 2:
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const AddNewVehicle()));
+                              builder: (context) => const Vehicle()));
                           break;
                         case 3:
                           Navigator.of(context).push(MaterialPageRoute(

@@ -1,135 +1,508 @@
-import 'package:drive_/ADMIN/VehicleALL.dart';
-import 'package:drive_/tabar/tabbarvehicle.dart';
-import 'package:flutter/material.dart';
+// ignore_for_file: avoid_print, use_build_context_synchronously
 
-class AddNewVehicle extends StatefulWidget {
-  const AddNewVehicle({super.key});
+
+import 'dart:convert';
+
+import 'package:drive_/CONNECTION/connection.dart';
+import 'package:drive_/SHAREDPREFERENCES/sharedPref.dart';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+
+class AddnewVehicle extends StatefulWidget {
+  const AddnewVehicle({super.key});
 
   @override
-  State<AddNewVehicle> createState() => _AddNewVehicleState();
+  State<AddnewVehicle> createState() => _AddnewVehicleState();
 }
 
-class _AddNewVehicleState extends State<AddNewVehicle> {
-  int selectedTabIndex = 0;
+DateTime? _selectedDate;
 
-  void onTabSelected(int index) {
+bool nameFieldEmpty = true;
+bool joinedFieldEmpty = true;
+bool modelFieldEmpty = true;
+bool LicenseFieldEmpty = true;
+
+class _AddnewVehicleState extends State<AddnewVehicle> {
+  var Lid;
+  File? _image;
+  Future _getImage() async {
+    print('printed');
+    final pickedImage =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    if (pickedImage != null) {
+      setState(() {
+        _image = File(pickedImage.path);
+      });
+    }
+  }
+Future<void> addVehicle() async {
+    var data = {
+      'name': name.text,
+      'model': _modelController.text,
+      'licenseplate': _numplateController.text,
+      'year': _yearController.text,
+      'vehicletype': selected_VehicleType.toString(),
+      'AdminID':Lid.toString(),
+    };
+    print(data);
+    var response =
+        await post(Uri.parse('${Con.url}/AddNewvehicle.php'), body: data);
+    print('${response.body}.........');
+
+    print(response.statusCode);
+    var res = jsonDecode(response.body);
+    
+    if (res["result"] == 'Success') {
+      print('sallll');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          margin: const EdgeInsets.symmetric(horizontal: 70, vertical: 15),
+          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+          content: const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.check, color: Colors.white),
+              SizedBox(width: 10),
+              Text(
+                'Added Successfully',
+                style: TextStyle(color: Colors.white),
+              ),
+            ],
+          ),
+          backgroundColor: Colors.green,
+          behavior: SnackBarBehavior.floating,
+          elevation: 4.0,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          duration: const Duration(seconds: 3),
+        ),
+      );
+      Navigator.of(context).pop();
+      name.clear();
+      _modelController.clear();
+      _numplateController.clear();
+      _yearController.clear();
+      _VehicleType.clear();
+    }
+  }
+
+  int? _selectedYear;
+  Future<void> _showYearPicker(BuildContext context) async {
+    int initialYear = DateTime.now().year;
+    int? selectedYear = await showDialog<int>(
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          title: const Text('Select a Year'),
+          children: <Widget>[
+            Container(
+              width: 200.0,
+              height: 200.0,
+              child: YearPicker(
+                firstDate: DateTime(2000),
+                lastDate: DateTime(2100),
+                selectedDate: DateTime(initialYear),
+                onChanged: (DateTime dateTime) {
+                  Navigator.of(context).pop(dateTime.year);
+                },
+              ),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (selectedYear != null) {
+      setState(() {
+        _selectedYear = selectedYear;
+        _yearController.text = selectedYear.toString();
+        print('Selected year: $_selectedYear');
+      });
+    }
+  }
+
+  final TextEditingController _yearController = TextEditingController();
+  final TextEditingController _numplateController = TextEditingController();
+  final TextEditingController _modelController = TextEditingController();
+
+  TextEditingController name = TextEditingController();
+  @override
+  void initState() {
+    
+    super.initState();
+ SharedPreferencesHelper.getSavedData().then((value) {
+      setState(() {
+        Lid=value;
+      });
+    });print('lid=$Lid');
+  
+    // Set up listeners for text fields
+    name.addListener(_updateNameFieldEmpty);
+    _yearController.addListener(_updateJoinedFieldEmpty);
+    _modelController.addListener(_updatemodelFieldEmpty);
+    _numplateController.addListener(_updateLicensePlateFieldEmpty);
+    
+  }
+
+  void _updateNameFieldEmpty() {
     setState(() {
-      selectedTabIndex = index;
+      nameFieldEmpty = name.text.isEmpty;
     });
+  }
+
+  void _updatemodelFieldEmpty() {
+    setState(() {
+      modelFieldEmpty = _modelController.text.isEmpty;
+    });
+  }
+
+  void _updateJoinedFieldEmpty() {
+    setState(() {
+      joinedFieldEmpty = _yearController.text.isEmpty;
+    });
+  }
+
+  void _updateLicensePlateFieldEmpty() {
+    setState(() {
+      LicenseFieldEmpty = _numplateController.text.isEmpty;
+    });
+  }
+
+  String? selected_VehicleType;
+
+  List<String> _VehicleType = [
+    '2 Whealer',
+    '3 Whealer',
+    '4 Whealer',
+    // Add more _VehicleType as needed
+  ];
+
+  final GlobalKey<FormState> _formKey =
+      GlobalKey<FormState>(); // Add a GlobalKey for the form
+  @override
+  void dispose() {
+    // Clean up the controllers and remove the listeners
+    name.dispose();
+    _modelController.dispose();
+    _numplateController.dispose();
+    _yearController.dispose();
+
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          leading: Card(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            child: Container(
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white30),
-                  borderRadius: BorderRadius.circular(10)),
-              child: IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: const Icon(
-                    Icons.keyboard_arrow_left,
-                    size: 30,
-                  )),
-            ),
-          ),
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
-          elevation: 0,
-        ),
-        body: Column(crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: 15,
-            ),
-            Stack(
-              alignment: Alignment.center,
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 20),
-                  height: 175,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                      color: const Color.fromRGBO(37, 51, 52, 1),
-                      borderRadius: BorderRadius.circular(10)),
-                ),
-                Container(
-                  height: 95,
-                  width: 230,
-                  decoration: BoxDecoration(
-                      color: const Color.fromRGBO(185, 190, 190, 1),
-                      borderRadius: BorderRadius.circular(5)),
-                ),
-                const Text(
-                  "Add New\n Vehicle",
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white),
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Card(elevation: 10,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                child: Container(height: 80,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10)),
+                SizedBox(
+                  height: 150,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      TabBarVehicle(
-                        text: '   All   ',
-                        isSelected: selectedTabIndex == 0,
-                        onTap: () => onTabSelected(0),
+                      Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white30),
+                              borderRadius: BorderRadius.circular(10)),
+                          child: IconButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              icon: const Icon(
+                                Icons.keyboard_arrow_left,
+                                size: 30,
+                              )),
+                        ),
                       ),
-                      TabBarVehicle(
-                        text: 'Two Wheeler',
-                        isSelected: selectedTabIndex == 1,
-                        onTap: () => onTabSelected(1),
-                      ),
-                      TabBarVehicle(
-                        text: 'Four Wheeler',
-                        isSelected: selectedTabIndex == 2,
-                        onTap: () => onTabSelected(2),
-                      ),
+                      const Text("Add New Vehicle",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold)),
+                      const SizedBox()
                     ],
                   ),
                 ),
-              ),
-            ),const Padding(
-              padding: EdgeInsets.only(left: 20.0),
-              child: Text("Available vehicles"),
-            ),
-              Expanded(
-                child: TabBarView(
-                 physics:const BouncingScrollPhysics(),
-               
-                  children: [
-                    
-                    if (selectedTabIndex == 0) const VehicleALL(),
-                  
-                    if (selectedTabIndex == 1) const VehicleALL(),
-                    if (selectedTabIndex == 2) const VehicleALL(),
-                  ],
+                const Text(
+                  'Add New Vehicle',
+                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                 ),
+                const SizedBox(height: 15.0),
+                Container(
+                    child: _image == null
+                        ? const Text('No image selected.')
+                        : Container(
+                            height: 150,
+                            width: MediaQuery.of(context).size.width / 2,
+                            child: Image.file(
+                              _image!,
+                              fit: BoxFit.cover,
+                            ),
+                          )),
+                ElevatedButton(
+                  onPressed: _getImage,
+                  child: const Text('Select Image'),
+                ),
+                const SizedBox(height: 15.0),
+                TextFormField(
+                    controller: name,
+                    decoration: InputDecoration(
+                      suffixIcon: nameFieldEmpty
+                          ? null
+                          : IconButton(
+                              onPressed: () {
+                                name.clear();
+                              },
+                              icon: const Icon(
+                                Icons.close,
+                                color: Colors.black,
+                              ),
+                            ),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      filled: true,
+                      fillColor: const Color.fromRGBO(247, 248, 249, 1),
+                      hintText: 'Name',
+                      hintStyle: GoogleFonts.urbanist(
+                          fontSize: 15, fontWeight: FontWeight.w300),
+                    ),
+                    keyboardType: TextInputType.name,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter a name';
+                      }
+                      if (value.length < 3) {
+                        return 'Name must be at least 3 characters long';
+                      }
+                      if (value.length > 20) {
+                        return 'Name can be at most 20 characters long';
+                      }
+                      if (RegExp(r'[!@#\$%^&*(),.?":{}|<>]').hasMatch(value)) {
+                        return 'Name cannot contain special characters';
+                      }
+                      return null;
+                    }
+
+                    // Inside your form submission function, you can use the validateName function
+
+                    ),
+                const SizedBox(height: 15.0),
+                TextFormField(
+                    controller: _modelController,
+                    decoration: InputDecoration(
+                      suffixIcon: modelFieldEmpty
+                          ? null
+                          : IconButton(
+                              onPressed: () {
+                                _modelController.clear();
+                              },
+                              icon: const Icon(
+                                Icons.close,
+                                color: Colors.black,
+                              ),
+                            ),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      filled: true,
+                      fillColor: const Color.fromRGBO(247, 248, 249, 1),
+                      hintText: 'Model',
+                      hintStyle: GoogleFonts.urbanist(
+                          fontSize: 15, fontWeight: FontWeight.w300),
+                    ),
+                    keyboardType: TextInputType.name,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter a Model';
+                      }
+                      if (value.length < 3) {
+                        return 'Name must be at least 3 characters long';
+                      }
+                      if (value.length > 20) {
+                        return 'Name can be at most 20 characters long';
+                      }
+                      if (RegExp(r'[!@#\$%^&*(),.?":{}|<>]').hasMatch(value)) {
+                        return 'Name cannot contain special characters';
+                      }
+                      return null;
+                    }
+
+                    // Inside your form submission function, you can use the validateName function
+
+                    ),
+                const SizedBox(height: 15.0),
+                TextFormField(
+                  controller: _numplateController,
+                  decoration: InputDecoration(
+                    suffixIcon: LicenseFieldEmpty
+                        ? null
+                        : IconButton(
+                            onPressed: () {
+                              _numplateController.clear();
+                            },
+                            icon: const Icon(
+                              Icons.close,
+                              color: Colors.black,
+                            ),
+                          ),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    filled: true,
+                    fillColor: const Color.fromRGBO(247, 248, 249, 1),
+                    hintText: 'License_plate',
+                    hintStyle: GoogleFonts.urbanist(
+                        fontSize: 15, fontWeight: FontWeight.w300),
+                  ),
+                  keyboardType: TextInputType.name,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter a License Plate Number';
+                    }
+
+                    // Define a regular expression to match a valid license plate format.
+                   final RegExp plateRegExp = RegExp(r'^[a-zA-Z0-9]{1,10}$');
+
+                    if (!plateRegExp.hasMatch(value)) {
+                      return 'License Plate Number is not valid';
+                    }
+
+                    return null;
+                  },
+
+                  // Inside your form submission function, you can use the validateName function
+                ),
+                const SizedBox(height: 15.0),
+                TextFormField(
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please select a year';
+                    }
+
+                    final int? year = int.tryParse(value);
+
+                    if (year == null) {
+                      return 'Invalid year format';
+                    }
+
+                    final int minYear =
+                        2000; // Define your minimum allowable year
+                    final int maxYear = DateTime.now()
+                        .year; // Define your maximum allowable year
+
+                    if (year < minYear || year > maxYear) {
+                      return 'Year must be between $minYear and $maxYear';
+                    }
+
+                    return null;
+                  },
+                  controller: _yearController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    filled: true,
+                    fillColor: const Color.fromRGBO(247, 248, 249, 1),
+                    hintText: 'Select Year',
+                    hintStyle: GoogleFonts.urbanist(
+                        fontSize: 15, fontWeight: FontWeight.w300),
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        _showYearPicker(context);
+                      },
+                      icon: const Icon(Icons.calendar_today),
+                    ),
+                  ),
+                  readOnly: true,
+                ),
+                const SizedBox(height: 15.0),
+                DropdownButtonFormField<String>(
+                  validator: (value) {
+                    if (value == null) {
+                      return 'Please select a vehicle type';
+                    }
+                    return null; // Return null if the selection is valid
+                  },
+                  borderRadius: BorderRadius.circular(20),
+                  value: selected_VehicleType,
+                  items: _VehicleType.map((String _VehicleType) {
+                    return DropdownMenuItem<String>(
+                      value: _VehicleType,
+                      child: Text(_VehicleType),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue1) {
+                    setState(() {
+                      selected_VehicleType = newValue1;
+                    });
+                  },
+                  decoration: InputDecoration(
+                    // Optional: Add decoration for the form field
+                    // labelText: 'Select a student', // Label text
+                    hintText: "Vehicle type",
+                    hintStyle: GoogleFonts.urbanist(
+                        fontSize: 15, fontWeight: FontWeight.w300),
+                    border: OutlineInputBorder(
+                        borderRadius:
+                            BorderRadius.circular(10)), // Add a border
+                  ),
+                ),
+                const SizedBox(height: 50.0),
+                ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                     addVehicle();
+                    }else{
+                       SnackBar(
+          margin: const EdgeInsets.symmetric(horizontal: 70, vertical: 15),
+          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+          content: const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.check, color: Colors.white),
+              SizedBox(width: 10),
+              Text(
+                'Adding failed',
+                style: TextStyle(color: Colors.white),
               ),
-
-
-          ],
+            ],
+          ),
+          backgroundColor: Colors.red,
+          behavior: SnackBarBehavior.floating,
+          elevation: 4.0,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          duration: const Duration(seconds: 3),
+        );
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    side: const BorderSide(width: 0.4),
+                    minimumSize: Size(MediaQuery.of(context).size.width, 50),
+                    backgroundColor: const Color.fromRGBO(37, 51, 52, 1),
+                    foregroundColor: Colors.white,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                  ),
+                  child: const Text(
+                    "Done",
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

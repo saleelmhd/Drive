@@ -23,7 +23,7 @@ class _ModuleState extends State<Module> {
               ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => LoginnAdmin()));
+                      MaterialPageRoute(builder: (context) => LoginnAdmin(  type: 'Admin',)));
                 },
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(MediaQuery.of(context).size.width * .6, 50),
