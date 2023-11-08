@@ -1,5 +1,7 @@
 import 'package:drive_/ADMIN/AddnewVehicle.dart';
 import 'package:drive_/ADMIN/VehicleALL.dart';
+import 'package:drive_/ADMIN/fourWhealer.dart';
+import 'package:drive_/ADMIN/twoWhealer.dart';
 import 'package:drive_/tabar/tabbarvehicle.dart';
 import 'package:flutter/material.dart';
 
@@ -47,7 +49,8 @@ class _VehicleState extends State<Vehicle> {
           foregroundColor: Colors.black,
           elevation: 0,
         ),
-        body: Column(crossAxisAlignment: CrossAxisAlignment.start,
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(
               height: 15,
@@ -63,9 +66,11 @@ class _VehicleState extends State<Vehicle> {
                       color: const Color.fromRGBO(37, 51, 52, 1),
                       borderRadius: BorderRadius.circular(10)),
                 ),
-                InkWell(onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>AddnewVehicle()));
-                },
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const AddnewVehicle()));
+                  },
                   child: Container(
                     height: 95,
                     width: 230,
@@ -88,8 +93,12 @@ class _VehicleState extends State<Vehicle> {
             ),
             Padding(
               padding: const EdgeInsets.all(15.0),
-              child: Card(elevation: 10,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                child: Container(height: 80,
+              child: Card(
+                elevation: 10,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                child: Container(
+                  height: 80,
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10)),
@@ -97,43 +106,42 @@ class _VehicleState extends State<Vehicle> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       TabBarVehicle(
-                        text: '   All   ',
-                        isSelected: selectedTabIndex == 0,
-                        onTap: () => onTabSelected(0),
-                      ),
+                          text: '   All   ',
+                          isSelected: selectedTabIndex == 0,
+                          onTap: () {
+                            onTabSelected(0);
+                          }),
                       TabBarVehicle(
-                        text: 'Two Wheeler',
-                        isSelected: selectedTabIndex == 1,
-                        onTap: () => onTabSelected(1),
-                      ),
+                          text: 'Two Wheeler',
+                          isSelected: selectedTabIndex == 1,
+                          onTap: () {
+                            onTabSelected(1);
+                          }),
                       TabBarVehicle(
-                        text: 'Four Wheeler',
-                        isSelected: selectedTabIndex == 2,
-                        onTap: () => onTabSelected(2),
-                      ),
+                          text: 'Four Wheeler',
+                          isSelected: selectedTabIndex == 2,
+                          onTap: () {
+                            onTabSelected(2);
+                          }),
                     ],
                   ),
                 ),
               ),
-            ),const Padding(
+            ),
+            const Padding(
               padding: EdgeInsets.only(left: 20.0),
               child: Text("Available vehicles"),
             ),
-              Expanded(
-                child: TabBarView(
-                 physics:const BouncingScrollPhysics(),
-               
-                  children: [
-                    
-                    if (selectedTabIndex == 0) const VehicleALL(),
-                  
-                    if (selectedTabIndex == 1) const VehicleALL(),
-                    if (selectedTabIndex == 2) const VehicleALL(),
-                  ],
-                ),
+            Expanded(
+              child: TabBarView(
+                physics: const BouncingScrollPhysics(),
+                children: [
+                  if (selectedTabIndex == 0) VehicleALL(),
+                  if (selectedTabIndex == 1) Twowhealer(),
+                  if (selectedTabIndex == 2) FourWhealer(),
+                ],
               ),
-
-
+            ),
           ],
         ),
       ),

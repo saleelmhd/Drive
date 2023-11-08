@@ -5,11 +5,11 @@ class TabBarVehicle extends StatelessWidget {
   final String text;
   final bool isSelected;
   final VoidCallback onTap;
-
   const TabBarVehicle({
     required this.text,
     required this.isSelected,
     required this.onTap,
+   
   });
 
   @override

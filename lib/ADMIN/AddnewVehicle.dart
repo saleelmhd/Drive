@@ -1,6 +1,3 @@
-// ignore_for_file: avoid_print, use_build_context_synchronously
-
-
 import 'dart:convert';
 
 import 'package:drive_/CONNECTION/connection.dart';
@@ -39,25 +36,26 @@ class _AddnewVehicleState extends State<AddnewVehicle> {
       });
     }
   }
-Future<void> addVehicle() async {
-    var data = {
-      'name': name.text,
-      'model': _modelController.text,
-      'licenseplate': _numplateController.text,
-      'year': _yearController.text,
-      'vehicletype': selected_VehicleType.toString(),
-      'AdminID':Lid.toString(),
-    };
-    print(data);
-    var response =
-        await post(Uri.parse('${Con.url}/AddNewvehicle.php'), body: data);
-    print('${response.body}.........');
 
-    print(response.statusCode);
-    var res = jsonDecode(response.body);
-    
-    if (res["result"] == 'Success') {
-      print('sallll');
+  Future<void> addVehicle(File imageFile) async {
+   
+   
+   
+ var pic = await MultipartFile.fromPath("image", imageFile.path);
+ 
+    var uri = Uri.parse("${Con.url}/AddNewvehicle.php");
+    //var pic = http.MultipartFile("image",stream,length,filename: basename(imageFile.path));
+    var request = MultipartRequest("POST", uri);
+    request.fields['name'] = name.text;
+    request.fields['model'] = _modelController.text;
+    request.fields['licenseplate'] = _numplateController.text;
+    request.fields['year'] =  _yearController.text;
+    request.fields['vehicletype'] = selected_VehicleType.toString();
+    request.fields['AdminID'] = Lid.toString();
+    request.files.add(pic);
+    var resp = await request.send();
+   if (resp.statusCode == 200) {
+      print('star');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           margin: const EdgeInsets.symmetric(horizontal: 70, vertical: 15),
@@ -87,7 +85,11 @@ Future<void> addVehicle() async {
       _numplateController.clear();
       _yearController.clear();
       _VehicleType.clear();
+    } else {
+      print('inside failed');
     }
+
+   
   }
 
   int? _selectedYear;
@@ -132,20 +134,19 @@ Future<void> addVehicle() async {
   TextEditingController name = TextEditingController();
   @override
   void initState() {
-    
     super.initState();
- SharedPreferencesHelper.getSavedData().then((value) {
+    SharedPreferencesHelper.getSavedData().then((value) {
       setState(() {
-        Lid=value;
+        Lid = value;
       });
-    });print('lid=$Lid');
-  
+    });
+    print('lid=$Lid');
+
     // Set up listeners for text fields
     name.addListener(_updateNameFieldEmpty);
     _yearController.addListener(_updateJoinedFieldEmpty);
     _modelController.addListener(_updatemodelFieldEmpty);
     _numplateController.addListener(_updateLicensePlateFieldEmpty);
-    
   }
 
   void _updateNameFieldEmpty() {
@@ -204,38 +205,35 @@ Future<void> addVehicle() async {
             key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 150,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Card(
-                        shape: RoundedRectangleBorder(
+              children: [SizedBox(height: 30,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.white30),
                             borderRadius: BorderRadius.circular(10)),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white30),
-                              borderRadius: BorderRadius.circular(10)),
-                          child: IconButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              icon: const Icon(
-                                Icons.keyboard_arrow_left,
-                                size: 30,
-                              )),
-                        ),
+                        child: IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: const Icon(
+                              Icons.keyboard_arrow_left,
+                              size: 30,
+                            )),
                       ),
-                      const Text("Add New Vehicle",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold)),
-                      const SizedBox()
-                    ],
-                  ),
-                ),
+                    ),
+                    const Text("Add New Vehicle",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold)),
+                    const SizedBox()
+                  ],
+                ),SizedBox(height: 30,),
                 const Text(
                   'Add New Vehicle',
                   style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
@@ -372,7 +370,7 @@ Future<void> addVehicle() async {
                     }
 
                     // Define a regular expression to match a valid license plate format.
-                   final RegExp plateRegExp = RegExp(r'^[a-zA-Z0-9]{1,10}$');
+                    final RegExp plateRegExp = RegExp(r'^[a-zA-Z0-9]{1,10}$');
 
                     if (!plateRegExp.hasMatch(value)) {
                       return 'License Plate Number is not valid';
@@ -461,29 +459,31 @@ Future<void> addVehicle() async {
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                     addVehicle();
-                    }else{
-                       SnackBar(
-          margin: const EdgeInsets.symmetric(horizontal: 70, vertical: 15),
-          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-          content: const Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.check, color: Colors.white),
-              SizedBox(width: 10),
-              Text(
-                'Adding failed',
-                style: TextStyle(color: Colors.white),
-              ),
-            ],
-          ),
-          backgroundColor: Colors.red,
-          behavior: SnackBarBehavior.floating,
-          elevation: 4.0,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-          duration: const Duration(seconds: 3),
-        );
+                      addVehicle(_image!);
+                    } else {
+                      SnackBar(
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 70, vertical: 15),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 5, vertical: 5),
+                        content: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.check, color: Colors.white),
+                            SizedBox(width: 10),
+                            Text(
+                              'Adding failed',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ],
+                        ),
+                        backgroundColor: Colors.red,
+                        behavior: SnackBarBehavior.floating,
+                        elevation: 4.0,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0)),
+                        duration: const Duration(seconds: 3),
+                      );
                     }
                   },
                   style: ElevatedButton.styleFrom(
@@ -499,7 +499,7 @@ Future<void> addVehicle() async {
                     "Done",
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
                   ),
-                ),
+                ),SizedBox(height: 30,),
               ],
             ),
           ),

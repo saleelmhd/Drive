@@ -1,16 +1,18 @@
 import 'dart:convert';
 
+import 'package:drive_/ADMIN/Vehicle.dart';
 import 'package:drive_/CONNECTION/connection.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
-class VehicleALL extends StatefulWidget {
-  VehicleALL({super.key});
+class Twowhealer extends StatefulWidget {
+  Twowhealer({Key? key}) : super(key: key);
+
   @override
-  State<VehicleALL> createState() => _VehicleALLState();
+  State<Twowhealer> createState() => _TwowhealerState();
 }
 
-class _VehicleALLState extends State<VehicleALL> {
+class _TwowhealerState extends State<Twowhealer> {
   int flag = 0;
   var res;
   Future<void> _refresh() async {
@@ -18,9 +20,9 @@ class _VehicleALLState extends State<VehicleALL> {
     setState(() {});
   }
 
-  Future<dynamic> viewStudents() async {
+  Future<dynamic> twoWhealer() async {
     var response = await get(
-      Uri.parse('${Con.url}/viewvehicle.php'),
+      Uri.parse('${Con.url}/twowhealer.php'),
     );
     print(response.body);
     print(response.statusCode);
@@ -39,7 +41,8 @@ class _VehicleALLState extends State<VehicleALL> {
     super.initState();
 
     setState(() {});
-    viewStudents();
+    twoWhealer();
+    print('$res...............');
   }
 
   @override
@@ -49,8 +52,9 @@ class _VehicleALLState extends State<VehicleALL> {
       Padding(
         padding: const EdgeInsets.all(8.0),
         child: FutureBuilder(
-            future: viewStudents(),
+            future: twoWhealer(),
             builder: (context, snapshot) {
+              print('............');
               if (snapshot.hasError) {
                 print('ERROR: ${snapshot.error}');
               }

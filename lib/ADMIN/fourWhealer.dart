@@ -4,13 +4,13 @@ import 'package:drive_/CONNECTION/connection.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
-class VehicleALL extends StatefulWidget {
-  VehicleALL({super.key});
+class FourWhealer extends StatefulWidget {
+  FourWhealer({super.key});
   @override
-  State<VehicleALL> createState() => _VehicleALLState();
+  State<FourWhealer> createState() => _FourWhealerState();
 }
 
-class _VehicleALLState extends State<VehicleALL> {
+class _FourWhealerState extends State<FourWhealer> {
   int flag = 0;
   var res;
   Future<void> _refresh() async {
@@ -20,7 +20,7 @@ class _VehicleALLState extends State<VehicleALL> {
 
   Future<dynamic> viewStudents() async {
     var response = await get(
-      Uri.parse('${Con.url}/viewvehicle.php'),
+      Uri.parse('${Con.url}/fourWhealer.php'),
     );
     print(response.body);
     print(response.statusCode);
