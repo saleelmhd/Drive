@@ -1,4 +1,5 @@
 import 'package:drive_/STUDENTS/beginartab.dart';
+import 'package:drive_/STUDENTS/detailsquiz.dart';
 import 'package:flutter/material.dart';
 
 class QuizHome extends StatefulWidget {
@@ -181,7 +182,9 @@ class _QuizHomeState extends State<QuizHome> {
                                            foregroundColor: Colors.white,
 
                                         ),
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>DetailQuiz()));
+                                },
                                 child: const Text("Start Quiz",style: TextStyle(fontSize: 16),),
                               ))
                         ],

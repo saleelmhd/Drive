@@ -1,4 +1,5 @@
 import 'package:drive_/STUDENTS/driveqstns.dart';
+import 'package:drive_/STUDENTS/drivingschool.dart';
 import 'package:flutter/material.dart';
 
 class DrivingSchoolQuiz extends StatefulWidget {
@@ -200,7 +201,7 @@ class _DrivingSchoolQuizState extends State<DrivingSchoolQuiz> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(8,0,8,15),
+                            padding: const EdgeInsets.fromLTRB(8, 0, 8, 15),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
@@ -217,13 +218,20 @@ class _DrivingSchoolQuizState extends State<DrivingSchoolQuiz> {
                                   ),
                                 ),
                                 ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                DrivingSchool()));
+                                  },
                                   child: const Text("submit Quiz"),
                                   style: ElevatedButton.styleFrom(
                                       minimumSize: Size(195, 50),
                                       backgroundColor: Colors.white,
                                       foregroundColor: Colors.black,
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
                                       side: BorderSide(color: Colors.black)),
                                 ),
                                 Container(

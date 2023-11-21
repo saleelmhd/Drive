@@ -38,6 +38,7 @@ class _AddnewVehicleState extends State<AddnewVehicle> {
   }
 
   Future<void> addVehicle(File imageFile) async {
+    
    
    
    

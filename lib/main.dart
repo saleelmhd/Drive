@@ -1,6 +1,8 @@
 import 'package:drive_/ADMIN/AddStudent.dart';
 import 'package:drive_/ADMIN/HomapageAdmin.dart';
 import 'package:drive_/ADMIN/Students.dart';
+import 'package:drive_/ADMIN/UpdateStud.dart';
+import 'package:drive_/ADMIN/UpdateTutor.dart';
 import 'package:drive_/FORMSCREENS/moduleScreen.dart';
 import 'package:flutter/material.dart';
 

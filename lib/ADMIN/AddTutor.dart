@@ -12,6 +12,7 @@ import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 
 class AddTtutor extends StatefulWidget {
+  
   var type;
   AddTtutor({super.key, required this.type});
 
@@ -19,14 +20,6 @@ class AddTtutor extends StatefulWidget {
   State<AddTtutor> createState() => _AddTtutorState();
 }
 
-String? _isselected;
-
-List<String> _vehicle = [
-  '2 whealer',
-  '3 whealer',
-  '4 whealer',
-  // Add more as needed
-];
 
 String? _selected;
 
@@ -38,6 +31,8 @@ List<String> _sex = [
 ];
 
 class _AddTtutorState extends State<AddTtutor> {
+  var selected_item1;
+
   var name = TextEditingController();
   var age = TextEditingController();
   var sex = TextEditingController();
@@ -71,7 +66,8 @@ var Lid;
       'email': mail.text,
       'phone': phone.text,
       'joineddate': dateController.text,
-      'vehicle': _isselected.toString(),
+      'vehicle': selected_item1.toString(),
+
       'gen_ID': _IDController.text,
       'type': widget.type,
        'AdminID':Lid.toString(),
@@ -116,7 +112,7 @@ var Lid;
       mail.clear();
       phone.clear();
       dateController.clear();
-      _vehicle.clear();
+      selected_item1.clear();
 
       // if (jsonDecode(response.body)['result'] == 'Success') {
       //   ScaffoldMessenger.of(context)
@@ -137,10 +133,44 @@ var Lid;
   bool emailFieldEmpty = true;
   bool numberFieldEmpty = true;
   bool joinedFieldEmpty = true;
+   var name_flag;
+  var ListData = [];
+  Future<void> viewPackage() async {
+    var response = await post(Uri.parse('${Con.url}/viewpackage.php'));
+    print(response.body);
+
+    if (response.statusCode == 200 &&
+        jsonDecode(response.body)[0]['result'] == 'Success') {
+      name_flag = 1;
+      var package = jsonDecode(response.body);
+      print('*********************************************');
+      print('package is = $package');
+
+      setState(() {
+        ListData = package
+            .map((listItem) => {
+                  'id': listItem['id'],
+                  'name': listItem['pname'],
+                   'price': listItem['price'],
+                  'duration': listItem['duration'],
+                })
+            .toList();
+      });
+      print('*********************************************');
+
+      print('ListData is = $ListData');
+      // return jsonDecode(response.body);
+    }
+    // else
+    //   drop_flag=0;
+    // drop_flag==1?      item=jsonDecode(response.body):item.add('Nothing to show');
+  }
 
   @override
   void initState() {
     super.initState();
+        viewPackage();
+
     _IDController.text = RandomIDGenerator.generateRandomID();
     // Set up listeners for text fields
     name.addListener(_updateNameFieldEmpty);
@@ -654,42 +684,64 @@ var Lid;
                   const SizedBox(
                     width: 10,
                   ),
-                  SizedBox(
-                    // width: MediaQuery.of(context).size.width / 2,
-                    child: DropdownButtonFormField<String>(
-                      borderRadius: BorderRadius.circular(20),
-                      value: _isselected,
-                      items: _vehicle.map((String vehic) {
-                        return DropdownMenuItem<String>(
-                          value: vehic,
-                          child: Text(vehic),
-                        );
-                      }).toList(),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          _isselected = newValue;
-                        });
-                      },
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: const Color.fromRGBO(247, 248, 249, 1),
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 17, horizontal: 10),
-                        hintText: "Selected Vehicle",
-                        hintStyle: GoogleFonts.urbanist(
-                            fontSize: 15, fontWeight: FontWeight.w300),
-                        border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.circular(10)), // Add a border
-                      ),
-                      padding: const EdgeInsets.only(bottom: 30),
-                      // Add validation function
-                      validator: (value) {
-                        if (value == null) {
-                          return 'Please select a vehicle';
-                        }
-                        return null;
-                      },
+                   DropdownButtonFormField(
+                    validator: (value) {
+                      if (value == null) {
+                        return 'Please select a package';
+                      }
+                      return null;
+                    },
+                    style: const TextStyle(fontSize: 16, color: Colors.black),
+                    isExpanded: true,
+                    hint: const Text(' Select Your vehicle'),
+                    value: selected_item1,
+                    items: ListData.map((VehicleType) => DropdownMenuItem(
+                         value: '${VehicleType['id']}',
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    '${VehicleType['name']}',
+                                  ),
+                                  const SizedBox(
+                                    width: 0,
+                                  ),
+                                  Text(
+                                    '${VehicleType['duration']}',
+                                    style: const TextStyle(color: Colors.blue),
+                                  ),
+                                  const SizedBox(
+                                    width: 20,
+                                  ),
+                                  Text(
+                                    'Rs.${VehicleType['price']}',
+                                    style: const TextStyle(color: Colors.red),
+                                  ),
+                                  const SizedBox(
+                                    width: 0,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        )).toList(),
+                    onChanged: (val) {
+                      setState(() {
+                        print("Selected value: $val");
+                        print("Dropdown items: $ListData");
+                        selected_item1 = val;
+                      });
+                    },
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      filled: true,
+                      fillColor: const Color.fromRGBO(247, 248, 249, 1),
                     ),
                   ),
                   SizedBox(height: 10,),
@@ -704,7 +756,7 @@ var Lid;
                       print(mail.text);
                       print(phone.text);
                       print(dateController.text);
-                      print(_isselected);}
+                      print(selected_item1);}
                       else{
                          ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

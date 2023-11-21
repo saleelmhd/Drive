@@ -1,5 +1,7 @@
 import 'package:drive_/ADMIN/AddStudent.dart';
 import 'package:drive_/ADMIN/StudALL.dart'; // Import your StudALL widget
+import 'package:drive_/ADMIN/studNew.dart';
+import 'package:drive_/ADMIN/studOLD.dart';
 import 'package:drive_/tabar/tabbaritem.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -252,8 +254,8 @@ class _StudentsState extends State<Students> {
               child: TabBarView(
                 children: [
                   if (selectedTabIndex == 0) StudALL(),
-                  if (selectedTabIndex == 1) StudALL(),
-                  if (selectedTabIndex == 2) StudALL(),
+                  if (selectedTabIndex == 1) StudNew(),
+                  if (selectedTabIndex == 2) StudOLD(),
                 ],
               ),
             ),

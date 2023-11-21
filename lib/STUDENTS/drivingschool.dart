@@ -1,3 +1,5 @@
+import 'package:drive_/STUDENTS/StudHome.dart';
+import 'package:drive_/STUDENTS/modelstudHome.dart';
 import 'package:flutter/material.dart';
 
 class DrivingSchool extends StatefulWidget {
@@ -211,17 +213,24 @@ class _DrivingSchoolState extends State<DrivingSchool> {
                           ],
                         ),    Column(
                           children: [
-                            CircleAvatar(
-                              backgroundColor:
-                                  Color.fromRGBO(173, 138, 232, 1),foregroundColor: Colors.white,
-                              radius: 25,
-                              child: SizedBox(
-                                  height: 20,
-                                  width: 25,
-                                  child: Image.asset(
-                                    "images/home.png",
-                                    fit: BoxFit.cover,
-                                  )),
+                            InkWell(onTap: () {
+                                Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                HomepagStud(skip: false,)));
+                            },
+                              child: CircleAvatar(
+                                backgroundColor:
+                                    Color.fromRGBO(173, 138, 232, 1),foregroundColor: Colors.white,
+                                radius: 25,
+                                child: SizedBox(
+                                    height: 20,
+                                    width: 25,
+                                    child: Image.asset(
+                                      "images/home.png",
+                                      fit: BoxFit.cover,
+                                    )),
+                              ),
                             ),
                             SizedBox(
                               height: 8,

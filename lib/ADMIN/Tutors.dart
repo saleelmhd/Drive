@@ -1,4 +1,6 @@
 import 'package:drive_/ADMIN/AddTutor.dart';
+import 'package:drive_/ADMIN/TutOLD.dart';
+import 'package:drive_/ADMIN/Tutornew.dart';
 import 'package:drive_/ADMIN/TutorsALL.dart';
 import 'package:drive_/tabar/tabbaritem.dart';
 import 'package:flutter/material.dart';
@@ -244,8 +246,8 @@ class _TutorsState extends State<Tutors> {
               child: TabBarView(
                 children: [
                   if (selectedTabIndex == 0) const TutorsALL(),
-                  if (selectedTabIndex == 1) const TutorsALL(),
-                  if (selectedTabIndex == 2) const TutorsALL(),
+                  if (selectedTabIndex == 1) const Tutnew(),
+                  if (selectedTabIndex == 2) const TutOLD(),
                 ],
               ),
             ),
