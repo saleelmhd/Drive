@@ -14,6 +14,62 @@ class NewSession extends StatefulWidget {
 }
 
 class _NewSessionState extends State<NewSession> {
+  var studid;
+  var tutorid;
+
+ Future<void> addSession() async {
+  
+    var data = {
+      
+      'stud_id': _selectedStudent.toString(),
+       'tutor_id':selected_VehicleType.toString(),
+      'date': dateController.text,
+      'time': timeController.text,
+     
+    };
+    print("${data}***********");
+    var response =
+        await post(Uri.parse('${Con.url}/addnewSession.php'), body: data);
+
+    print(response.statusCode);
+
+    var res = jsonDecode(response.body);
+
+    if (res["result"] == 'Success') {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          margin: const EdgeInsets.symmetric(horizontal: 70, vertical: 15),
+          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+          content: const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.check, color: Colors.white),
+              SizedBox(width: 10),
+              Text(
+                'Added Successfully',
+                style: TextStyle(color: Colors.white),
+              ),
+            ],
+          ),
+          backgroundColor: Colors.green,
+          behavior: SnackBarBehavior.floating,
+          elevation: 4.0,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          duration: const Duration(seconds: 3),
+        ),
+      );
+      Navigator.of(context).pop();
+    
+
+    
+    }
+  }
+
+
+
+
+
   DateTime? _selectedDate;
   final DateFormat _dateFormat = DateFormat('yyyy-MM-dd');
   final DateTime _minDate = DateTime(2020, 1, 1);
@@ -23,24 +79,46 @@ class _NewSessionState extends State<NewSession> {
   TextEditingController dateController = TextEditingController();
 
   Future<void> _showTimePicker(BuildContext context) async {
-    final TimeOfDay? picked = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.fromDateTime(selectedTime),
-    );
+  final TimeOfDay? picked = await showTimePicker(
+    context: context,
+    initialTime: TimeOfDay.fromDateTime(selectedTime),
+    builder: (BuildContext context, Widget? child) {
+      return MediaQuery(
+        data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: false),
+        child: child!,
+      );
+    },
+  );
 
-    if (picked != null) {
-      setState(() {
-        selectedTime = DateTime(
-          selectedTime.year,
-          selectedTime.month,
-          selectedTime.day,
-          picked.hour,
-          picked.minute,
-        );
-        timeController.text = '${selectedTime.hour}:${selectedTime.minute}';
-      });
-    }
+  if (picked != null) {
+    setState(() {
+      selectedTime = DateTime(
+        selectedTime.year,
+        selectedTime.month,
+        selectedTime.day,
+        picked.hour,
+        picked.minute,
+      );
+
+      // Format time with AM/PM
+      String formattedTime = DateFormat.jm().format(selectedTime);
+
+      timeController.text = formattedTime;
+
+      // Clear minute error if any
+      // You can customize this part based on your specific validation criteria
+      // For example, checking if the selected time is within a valid range
+      if (selectedTime.minute % 5 != 0) {
+        // Handle minute error as needed
+        // For simplicity, let's round up to the nearest 5 minutes
+        int roundedMinutes = ((selectedTime.minute / 5).round()) * 5;
+        selectedTime = selectedTime.add(Duration(minutes: roundedMinutes - selectedTime.minute));
+        timeController.text = DateFormat.jm().format(selectedTime);
+      }
+    });
   }
+}
+
 
   String? _selectedStudent;
 
@@ -113,45 +191,13 @@ class _NewSessionState extends State<NewSession> {
     // drop_flag==1?      item=jsonDecode(response.body):item.add('Nothing to show');
   }
 
-  var name_flag2;
-  var ListData = [];
-  Future<void> viewPackage() async {
-    var response = await post(Uri.parse('${Con.url}/viewpackage.php'));
-    print(response.body);
-
-    if (response.statusCode == 200 &&
-        jsonDecode(response.body)[0]['result'] == 'Success') {
-      name_flag = 1;
-      var package = jsonDecode(response.body);
-      print('*********************************************');
-      print('package is = $package');
-
-      setState(() {
-        ListData = package
-            .map((listItem) => {
-                  'id': listItem['id'],
-                  'name': listItem['pname'],
-                  'price': listItem['price'],
-                  'duration': listItem['duration'],
-                })
-            .toList();
-      });
-      print('*********************************************');
-
-      print('ListData is = $ListData');
-      // return jsonDecode(response.body);
-    }
-    // else
-    //   drop_flag=0;
-    // drop_flag==1?      item=jsonDecode(response.body):item.add('Nothing to show');
-  }
+ 
 
   @override
   void initState() {
     super.initState();
     viewSt();
     viewTut();
-    viewPackage();
   }
 
   @override
@@ -218,14 +264,17 @@ class _NewSessionState extends State<NewSession> {
                   borderRadius: BorderRadius.circular(20),
                   value: _selectedStudent,
                   items: Liststud.map((student) {
+                     studid='${student['id']}';
+                  
                     return DropdownMenuItem<String>(
-                      value: '${student['name']}',
+                      value: '$studid',
                       child: Text('${student['name']}'),
                     );
                   }).toList(),
                   onChanged: (String? newValue) {
                     setState(() {
                       _selectedStudent = newValue;
+                      print('{$_selectedStudent}=========');
                     });
                   },
                   decoration: InputDecoration(
@@ -251,14 +300,15 @@ class _NewSessionState extends State<NewSession> {
                   borderRadius: BorderRadius.circular(20),
                   value: _selectedTutor,
                   items: ListTut.map((Tutor) {
+                    tutorid= '${Tutor['id']}';
                     return DropdownMenuItem<String>(
-                      value: '${Tutor['name']}',
+                      value:'$tutorid',
                       child: Text('${Tutor['name']}'),
                     );
                   }).toList(),
                   onChanged: (String? newValuee) {
                     setState(() {
-                      _selectedStudent = newValuee;
+                      _selectedTutor = newValuee;
                     });
                   },
                   decoration: InputDecoration(
@@ -336,66 +386,15 @@ class _NewSessionState extends State<NewSession> {
                 ),
               ),
               const SizedBox(height: 15.0),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: DropdownButtonFormField<String>(
-                  borderRadius: BorderRadius.circular(20),
-                  value: selected_VehicleType,
-                  items: ListData.map((VehicleType) {
-                    return DropdownMenuItem<String>(
-                      value: '${VehicleType['id']}',
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                '${VehicleType['name']}',
-                              ),
-                              const SizedBox(
-                                width: 50,
-                              ),
-                              Text(
-                                '${VehicleType['duration']}',
-                                style: const TextStyle(color: Colors.blue),
-                              ),
-                              const SizedBox(
-                                width: 50,
-                              ),
-                              Text(
-                                '${VehicleType['price']}',
-                                style: const TextStyle(color: Colors.red),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    );
-                  }).toList(),
-                  onChanged: (String? newValue1) {
-                    setState(() {
-                      selected_VehicleType = newValue1;
-                    });
-                  },
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: const Color.fromRGBO(232, 234, 236, 1),
-                    // Optional: Add decoration for the form field
-                    // labelText: 'Select a student', // Label text
-                    hintText: "Vehicle type",
-                    border: OutlineInputBorder(
-                        borderRadius:
-                            BorderRadius.circular(10)), // Add a border
-                  ),
-                ),
-              ),
+             
               const SizedBox(height: 50.0),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+
+                    addSession();
+                  },
                   style: ElevatedButton.styleFrom(
                     side: const BorderSide(width: 0.4),
                     minimumSize: Size(MediaQuery.of(context).size.width, 50),

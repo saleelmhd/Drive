@@ -4,6 +4,7 @@ import 'package:drive_/ADMIN/Students.dart';
 import 'package:drive_/ADMIN/UpdateStud.dart';
 import 'package:drive_/ADMIN/UpdateTutor.dart';
 import 'package:drive_/FORMSCREENS/moduleScreen.dart';
+import 'package:drive_/STUDENTS/drivingschoolquiz.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,8 +17,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return  MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:
-       Module(),
+      // home:Module(),
+      home: DrivingSchoolQuiz(),
 
       //  AnimatedSplashScreen(
       //   splash: RichText(

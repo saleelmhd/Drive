@@ -37,25 +37,54 @@ class _AddnewVehicleState extends State<AddnewVehicle> {
     }
   }
 
+  var name_flag2;
+  var ListData = [];
+  Future<void> viewPackage() async {
+    var response = await post(Uri.parse('${Con.url}/viewpackage.php'));
+    print(response.body);
+
+    if (response.statusCode == 200 &&
+        jsonDecode(response.body)[0]['result'] == 'Success') {
+      name_flag2 = 1;
+      var package = jsonDecode(response.body);
+      print('*********************************************');
+      print('package is = $package');
+
+      setState(() {
+        ListData = package
+            .map((listItem) => {
+                  'id': listItem['id'],
+                  'name': listItem['pname'],
+                  'price': listItem['price'],
+                  'duration': listItem['duration'],
+                })
+            .toList();
+      });
+      print('*********************************************');
+
+      print('ListData is = $ListData');
+      // return jsonDecode(response.body);
+    }
+    // else
+    //   drop_flag=0;
+    // drop_flag==1?      item=jsonDecode(response.body):item.add('Nothing to show');
+  }
+
   Future<void> addVehicle(File imageFile) async {
-    
-   
-   
-   
- var pic = await MultipartFile.fromPath("image", imageFile.path);
- 
+    var pic = await MultipartFile.fromPath("image", imageFile.path);
+
     var uri = Uri.parse("${Con.url}/AddNewvehicle.php");
     //var pic = http.MultipartFile("image",stream,length,filename: basename(imageFile.path));
     var request = MultipartRequest("POST", uri);
     request.fields['name'] = name.text;
     request.fields['model'] = _modelController.text;
     request.fields['licenseplate'] = _numplateController.text;
-    request.fields['year'] =  _yearController.text;
+    request.fields['year'] = _yearController.text;
     request.fields['vehicletype'] = selected_VehicleType.toString();
     request.fields['AdminID'] = Lid.toString();
     request.files.add(pic);
     var resp = await request.send();
-   if (resp.statusCode == 200) {
+    if (resp.statusCode == 200) {
       print('star');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -89,8 +118,6 @@ class _AddnewVehicleState extends State<AddnewVehicle> {
     } else {
       print('inside failed');
     }
-
-   
   }
 
   int? _selectedYear;
@@ -136,6 +163,7 @@ class _AddnewVehicleState extends State<AddnewVehicle> {
   @override
   void initState() {
     super.initState();
+    viewPackage();
     SharedPreferencesHelper.getSavedData().then((value) {
       setState(() {
         Lid = value;
@@ -206,7 +234,10 @@ class _AddnewVehicleState extends State<AddnewVehicle> {
             key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [SizedBox(height: 30,),
+              children: [
+                SizedBox(
+                  height: 30,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -234,7 +265,10 @@ class _AddnewVehicleState extends State<AddnewVehicle> {
                             fontWeight: FontWeight.bold)),
                     const SizedBox()
                   ],
-                ),SizedBox(height: 30,),
+                ),
+                SizedBox(
+                  height: 30,
+                ),
                 const Text(
                   'Add New Vehicle',
                   style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
@@ -426,18 +460,39 @@ class _AddnewVehicleState extends State<AddnewVehicle> {
                 ),
                 const SizedBox(height: 15.0),
                 DropdownButtonFormField<String>(
-                  validator: (value) {
-                    if (value == null) {
-                      return 'Please select a vehicle type';
-                    }
-                    return null; // Return null if the selection is valid
-                  },
                   borderRadius: BorderRadius.circular(20),
                   value: selected_VehicleType,
-                  items: _VehicleType.map((String _VehicleType) {
+                  items: ListData.map((VehicleType) {
                     return DropdownMenuItem<String>(
-                      value: _VehicleType,
-                      child: Text(_VehicleType),
+                      value: '${VehicleType['id']}',
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                '${VehicleType['name']}',
+                              ),
+                              const SizedBox(
+                                width: 50,
+                              ),
+                              Text(
+                                '${VehicleType['duration']}',
+                                style: const TextStyle(color: Colors.blue),
+                              ),
+                              const SizedBox(
+                                width: 50,
+                              ),
+                              Text(
+                                '${VehicleType['price']}',
+                                style: const TextStyle(color: Colors.red),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     );
                   }).toList(),
                   onChanged: (String? newValue1) {
@@ -446,11 +501,11 @@ class _AddnewVehicleState extends State<AddnewVehicle> {
                     });
                   },
                   decoration: InputDecoration(
+                    filled: true,
+                    fillColor: const Color.fromRGBO(247, 248, 249, 1),
                     // Optional: Add decoration for the form field
                     // labelText: 'Select a student', // Label text
                     hintText: "Vehicle type",
-                    hintStyle: GoogleFonts.urbanist(
-                        fontSize: 15, fontWeight: FontWeight.w300),
                     border: OutlineInputBorder(
                         borderRadius:
                             BorderRadius.circular(10)), // Add a border
@@ -500,7 +555,10 @@ class _AddnewVehicleState extends State<AddnewVehicle> {
                     "Done",
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
                   ),
-                ),SizedBox(height: 30,),
+                ),
+                SizedBox(
+                  height: 30,
+                ),
               ],
             ),
           ),

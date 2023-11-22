@@ -3,7 +3,23 @@ import 'package:drive_/STUDENTS/modelstudHome.dart';
 import 'package:flutter/material.dart';
 
 class DrivingSchool extends StatefulWidget {
-  const DrivingSchool({super.key});
+  var score;
+  var wrongAns;
+  var attempted;
+  var unattempted;
+  var totelqstns;
+  var percent;
+  DrivingSchool(
+      {super.key,
+      required this.score,
+      required this.wrongAns,
+      required this.attempted,
+      required this.unattempted,
+      required this.totelqstns,
+      required this.percent,
+
+     
+      });
 
   @override
   State<DrivingSchool> createState() => _DrivingSchoolState();
@@ -62,19 +78,21 @@ class _DrivingSchoolState extends State<DrivingSchool> {
                     const SizedBox(
                       height: 45,
                     ),
-                    const CircleAvatar(
+                    CircleAvatar(
                       radius: 80,
-                      backgroundColor: Color.fromRGBO(255, 255, 255, 0.192),
+                      backgroundColor:
+                          const Color.fromRGBO(255, 255, 255, 0.192),
                       child: CircleAvatar(
                         radius: 65,
-                        backgroundColor: Color.fromARGB(90, 156, 160, 177),
+                        backgroundColor:
+                            const Color.fromARGB(90, 156, 160, 177),
                         child: CircleAvatar(
                           radius: 55,
                           backgroundColor: Colors.white,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
+                              const Text(
                                 "Your Score",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -84,13 +102,13 @@ class _DrivingSchoolState extends State<DrivingSchool> {
                               Wrap(
                                 children: [
                                   Text(
-                                    "100",
-                                    style: TextStyle(
+                                    "  ${widget.score == null ? 0 : widget.score}",
+                                    style: const TextStyle(
                                         fontSize: 28,
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold),
                                   ),
-                                  Padding(
+                                  const Padding(
                                     padding: EdgeInsets.only(top: 10.0),
                                     child: Text(" pt",
                                         style: TextStyle(
@@ -115,13 +133,14 @@ class _DrivingSchoolState extends State<DrivingSchool> {
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(13),
                         topRight: Radius.circular(13))),
-                        
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [  SizedBox(
-                              height: 70,
-                            ),
-                    Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    const SizedBox(
+                      height: 70,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Column(
                           children: [
@@ -145,14 +164,12 @@ class _DrivingSchoolState extends State<DrivingSchool> {
                               style: TextStyle(fontSize: 14),
                             ),
                           ],
-                        ),  
-                        
-                        
-                         const Column(
+                        ),
+                        const Column(
                           children: [
                             CircleAvatar(
-                              backgroundColor:
-                                  Color.fromRGBO(203, 151, 113, 1),foregroundColor: Colors.white,
+                              backgroundColor: Color.fromRGBO(203, 151, 113, 1),
+                              foregroundColor: Colors.white,
                               radius: 25,
                               child: Icon(Icons.visibility),
                             ),
@@ -164,11 +181,12 @@ class _DrivingSchoolState extends State<DrivingSchool> {
                               style: TextStyle(fontSize: 14),
                             ),
                           ],
-                        ),   const Column(
+                        ),
+                        const Column(
                           children: [
-                            CircleAvatar(foregroundColor: Colors.white,
-                              backgroundColor:
-                                  Color.fromRGBO(102, 128, 219, 1),
+                            CircleAvatar(
+                              foregroundColor: Colors.white,
+                              backgroundColor: Color.fromRGBO(102, 128, 219, 1),
                               radius: 25,
                               child: Icon(Icons.share),
                             ),
@@ -183,11 +201,11 @@ class _DrivingSchoolState extends State<DrivingSchool> {
                         )
                       ],
                     ),
-
-                      SizedBox(
-                              height: 40,
-                            ),
-                     Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Column(
                           children: [
@@ -211,17 +229,20 @@ class _DrivingSchoolState extends State<DrivingSchool> {
                               style: TextStyle(fontSize: 14),
                             ),
                           ],
-                        ),    Column(
+                        ),
+                        Column(
                           children: [
-                            InkWell(onTap: () {
-                                Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                HomepagStud(skip: false,)));
-                            },
+                            InkWell(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => HomepagStud(
+                                          skip: false,
+                                        )));
+                              },
                               child: CircleAvatar(
                                 backgroundColor:
-                                    Color.fromRGBO(173, 138, 232, 1),foregroundColor: Colors.white,
+                                    const Color.fromRGBO(173, 138, 232, 1),
+                                foregroundColor: Colors.white,
                                 radius: 25,
                                 child: SizedBox(
                                     height: 20,
@@ -232,21 +253,23 @@ class _DrivingSchoolState extends State<DrivingSchool> {
                                     )),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 8,
                             ),
-                            Text(
+                            const Text(
                               "       Home       ",
                               style: TextStyle(fontSize: 14),
                             ),
                           ],
-                        ),    Column(
+                        ),
+                        Column(
                           children: [
-                            CircleAvatar(foregroundColor: Colors.white,
+                            CircleAvatar(
+                              foregroundColor: Colors.white,
                               backgroundColor:
-                                  Color.fromRGBO(95, 106, 110, 1),
+                                  const Color.fromRGBO(95, 106, 110, 1),
                               radius: 25,
-                             child: SizedBox(
+                              child: SizedBox(
                                   height: 20,
                                   width: 25,
                                   child: Image.asset(
@@ -254,10 +277,10 @@ class _DrivingSchoolState extends State<DrivingSchool> {
                                     fit: BoxFit.cover,
                                   )),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 8,
                             ),
-                            Text(
+                            const Text(
                               "Leaderboard",
                               style: TextStyle(fontSize: 14),
                             ),
@@ -280,15 +303,15 @@ class _DrivingSchoolState extends State<DrivingSchool> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30)),
                 elevation: 8,
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
+                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
@@ -303,7 +326,7 @@ class _DrivingSchoolState extends State<DrivingSchool> {
                                     height: 15,
                                   ),
                                   Text(
-                                    "100%",
+                                 "${widget.percent==null?0 : widget.percent.toInt()}%",
                                     style: TextStyle(fontSize: 20),
                                   ),
                                   Text("Completion")
@@ -315,21 +338,21 @@ class _DrivingSchoolState extends State<DrivingSchool> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Text(
+                              const Text(
                                 "•",
                                 style: TextStyle(fontSize: 55),
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 15,
                                   ),
                                   Text(
-                                    "20",
-                                    style: TextStyle(fontSize: 20),
+                                    '${widget.totelqstns == null ? 0 : widget.totelqstns}',
+                                    style: const TextStyle(fontSize: 20),
                                   ),
-                                  Text("Totel Question")
+                                  const Text("Totel Question")
                                 ],
                               ),
                             ],
@@ -354,7 +377,7 @@ class _DrivingSchoolState extends State<DrivingSchool> {
                                     height: 15,
                                   ),
                                   Text(
-                                    "13",
+                                    '${widget.score == null ? 0 : widget.score}',
                                     style: TextStyle(fontSize: 20),
                                   ),
                                   Text("Correct")
@@ -377,7 +400,7 @@ class _DrivingSchoolState extends State<DrivingSchool> {
                                     height: 15,
                                   ),
                                   Text(
-                                    "07",
+                                    '${widget.wrongAns == null ? 0 : widget.wrongAns}',
                                     style: TextStyle(fontSize: 20),
                                   ),
                                   Text("Wrong              ")

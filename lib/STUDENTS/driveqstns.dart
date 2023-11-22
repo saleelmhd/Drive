@@ -1,3 +1,4 @@
+import 'package:drive_/STUDENTS/quizbank.dart';
 import 'package:flutter/material.dart';
 
 class QestionSet1 extends StatefulWidget {
@@ -8,6 +9,8 @@ class QestionSet1 extends StatefulWidget {
 }
 
 class _QestionSet1State extends State<QestionSet1> {
+    int questionsNum = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,8 +18,8 @@ class _QestionSet1State extends State<QestionSet1> {
         padding: const EdgeInsets.all(30.0),
         child: Column(
           children: [
-            const Text(
-              "What is the purpose of a learner's permit or provisional license in the context of driver licensing?",
+             Text(
+              questions[questionsNum]['question'],
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),const SizedBox(height: 40,),
             Row(
