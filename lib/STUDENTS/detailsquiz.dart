@@ -109,7 +109,7 @@ class _DetailQuizState extends State<DetailQuiz> {
             ),
           ),
           Expanded(
-            child: DraggableScrollableSheet(
+            child: DraggableScrollableSheet(controller: DraggableScrollableController(),
                 initialChildSize: 1,
                 maxChildSize: 1,
                 minChildSize: 1,
@@ -141,221 +141,223 @@ class _DetailQuizState extends State<DetailQuiz> {
                           const Expanded(
                             child: Padding(
                               padding: EdgeInsets.only(left: 30.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "Brief explanation about this quiz",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 16,
-                                  ),
-                                  Row(
-                                    children: [
-                                      CircleAvatar(
-                                        backgroundColor: Colors.black,
-                                        child: Icon(
-                                          Icons.description_outlined,
-                                          size: 20,
-                                        ),
-                                        foregroundColor: Colors.white,
-                                      ),
-                                      SizedBox(
-                                        width: 20,
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            "10 Question",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16),
-                                          ),
-                                          Text(
-                                            "10 Question for a correct answer",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w300,
-                                                fontSize: 14),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 16,
-                                  ),
-                                  Row(
-                                    children: [
-                                      CircleAvatar(
-                                        backgroundColor: Colors.black,
-                                        child: Icon(
-                                          Icons.schedule,
-                                          size: 20,
-                                        ),
-                                        foregroundColor: Colors.white,
-                                      ),
-                                      SizedBox(
-                                        width: 20,
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            "1 hour 15 min",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16),
-                                          ),
-                                          Text(
-                                            "Total duration of the quiz",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w300,
-                                                fontSize: 14),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 16,
-                                  ),
-                                  Row(
-                                    children: [
-                                      CircleAvatar(
-                                        backgroundColor: Colors.black,
-                                        child: Icon(
-                                          Icons.star_outline_outlined,
-                                          size: 20,
-                                        ),
-                                        foregroundColor: Colors.white,
-                                      ),
-                                      SizedBox(
-                                        width: 20,
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            "Win 10 star",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16),
-                                          ),
-                                          Text(
-                                            "Answer all questions correctly",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w300,
-                                                fontSize: 14),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Text(
-                                    "Please read the text below carefully so you can understand it",
-                                    style: TextStyle(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.bold,
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(
+                                      height: 20,
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    height: 7,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "•",
-                                        style: TextStyle(fontSize: 30),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "Brief explanation about this quiz",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 16,
+                                    ),
+                                    Row(
+                                      children: [
+                                        CircleAvatar(
+                                          backgroundColor: Colors.black,
+                                          child: Icon(
+                                            Icons.description_outlined,
+                                            size: 20,
+                                          ),
+                                          foregroundColor: Colors.white,
+                                        ),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "10 Question",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 16),
+                                            ),
+                                            Text(
+                                              "10 Question for a correct answer",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w300,
+                                                  fontSize: 14),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 16,
+                                    ),
+                                    Row(
+                                      children: [
+                                        CircleAvatar(
+                                          backgroundColor: Colors.black,
+                                          child: Icon(
+                                            Icons.schedule,
+                                            size: 20,
+                                          ),
+                                          foregroundColor: Colors.white,
+                                        ),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "1 hour 15 min",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 16),
+                                            ),
+                                            Text(
+                                              "Total duration of the quiz",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w300,
+                                                  fontSize: 14),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 16,
+                                    ),
+                                    Row(
+                                      children: [
+                                        CircleAvatar(
+                                          backgroundColor: Colors.black,
+                                          child: Icon(
+                                            Icons.star_outline_outlined,
+                                            size: 20,
+                                          ),
+                                          foregroundColor: Colors.white,
+                                        ),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "Win 10 star",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 16),
+                                            ),
+                                            Text(
+                                              "Answer all questions correctly",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w300,
+                                                  fontSize: 14),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    Text(
+                                      "Please read the text below carefully so you can understand it",
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.bold,
                                       ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(top: 15.0),
-                                        child: Text(
-                                          "10 point awarded for a correct answer and no\n marks for a incorrect answer",
+                                    ),
+                                    const SizedBox(
+                                      height: 7,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "•",
+                                          style: TextStyle(fontSize: 30),
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(top: 15.0),
+                                          child: Text(
+                                            "10 point awarded for a correct answer and no\n marks for a incorrect answer",
+                                            style: TextStyle(
+                                              fontSize: 13,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "•",
+                                          style: TextStyle(fontSize: 30),
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(
+                                          "Tap on options to select the correct answer",
                                           style: TextStyle(
                                             fontSize: 13,
                                           ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "•",
-                                        style: TextStyle(fontSize: 30),
-                                      ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text(
-                                        "Tap on options to select the correct answer",
-                                        style: TextStyle(
-                                          fontSize: 13,
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "•",
+                                          style: TextStyle(fontSize: 30),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "•",
-                                        style: TextStyle(fontSize: 30),
-                                      ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(top: 15.0),
-                                        child: Text(
-                                          "Tap on the bookmark icon to save interesting\n questions",
-                                          style: TextStyle(
-                                            fontSize: 13,
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(top: 15.0),
+                                          child: Text(
+                                            "Tap on the bookmark icon to save interesting\n questions",
+                                            style: TextStyle(
+                                              fontSize: 13,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "•",
-                                        style: TextStyle(fontSize: 30),
-                                      ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(top: 15.0),
-                                        child: Text(
-                                          "Click submit if you are sure you want to\n complete all the quizzes",
-                                          style: TextStyle(
-                                            fontSize: 13,
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "•",
+                                          style: TextStyle(fontSize: 30),
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(top: 15.0),
+                                          child: Text(
+                                            "Click submit if you are sure you want to\n complete all the quizzes",
+                                            style: TextStyle(
+                                              fontSize: 13,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
-                                  )
-                                ],
+                                      ],
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           ),

@@ -1,8 +1,11 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:drive_/ADMIN/editTutor.dart';
 import 'package:drive_/CONNECTION/connection.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:image_picker/image_picker.dart';
 
 class UpdateTutor extends StatefulWidget {
   var uid;
@@ -24,6 +27,8 @@ class _UpdateTutorState extends State<UpdateTutor> {
   var password;
   var vehicletypee;
   int flag = 0;
+  var imageflag = 0;
+  var img;
   var res;
   Future<void> _refresh() async {
     await Future.delayed(const Duration(milliseconds: 100));
@@ -66,7 +71,129 @@ class _UpdateTutorState extends State<UpdateTutor> {
     print(widget.uid);
     setState(() {
       viewTutDetails();
+      viewStudprofilepic();
+      _refresh();
     });
+  }
+
+  Future<void> addprofile(File imageFile) async {
+    var pic = await MultipartFile.fromPath("image", imageFile.path);
+
+    var uri = Uri.parse("${Con.url}/addprofilepic.php");
+    //var pic = http.MultipartFile("image",stream,length,filename: basename(imageFile.path));
+    var request = MultipartRequest("POST", uri);
+    request.fields['uid'] = widget.uid.toString();
+
+    request.files.add(pic);
+    var resp = await request.send();
+
+    if (resp.statusCode == 200) {
+      print('star');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          margin: const EdgeInsets.symmetric(horizontal: 70, vertical: 15),
+          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+          content: const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.check, color: Colors.white),
+              SizedBox(width: 10),
+              Text(
+                'Added Successfully',
+                style: TextStyle(color: Colors.white),
+              ),
+            ],
+          ),
+          backgroundColor: Colors.green,
+          behavior: SnackBarBehavior.floating,
+          elevation: 4.0,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          duration: const Duration(seconds: 3),
+        ),
+      );
+      Navigator.of(context).pop();
+    } else {
+      print('inside failed');
+    }
+  }
+
+  File? _image;
+
+  Future<void> _getImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      bool confirm = await _showConfirmationDialog(pickedFile.path);
+
+      if (confirm) {
+        setState(() {
+          _image = File(pickedFile.path);
+        });
+      }
+    }
+  }
+
+  Future<void> viewStudprofilepic() async {
+    var data = {'uid': widget.uid.toString()};
+    var response =
+        await post(Uri.parse('${Con.url}/viewprofilepic.php'), body: data);
+
+    print(response.statusCode);
+
+    var res = jsonDecode(response.body);
+    print('.....${data}.......');
+    print(res);
+
+    if (res[0]["result"] == 'Success') {
+      setState(() {
+        //    imageflag = 1;
+        img = (res[0]['img'] != 'unavailable') ? res[0]['img'] : 'noData';
+        if (img != 'noData') {
+          imageflag = 1;
+        }
+        print(img);
+        print("${imageflag}+++++++++++++++++");
+      });
+    }
+  }
+
+  Future<bool> _showConfirmationDialog(String imagePath) async {
+    return await showDialog<bool>(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Confirm'),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Image.file(
+                    File(imagePath),
+                  ),
+                  SizedBox(height: 16),
+                  Text('Do you want to pick this image?'),
+                ],
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(false); // User does not confirm
+                  },
+                  child: Text('Cancel'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(true);
+                    // User confirms
+                  },
+                  child: Text('Confirm'),
+                ),
+              ],
+            );
+          },
+        ) ??
+        false; // Return false if the user dismisses the dialog
   }
 
   @override
@@ -108,20 +235,50 @@ class _UpdateTutorState extends State<UpdateTutor> {
                 const SizedBox(
                   height: 10,
                 ),
-                const Stack(
+                Stack(
                   children: [
                     CircleAvatar(
                       radius: 81,
                       backgroundColor: Colors.white,
                     ),
-                    CircleAvatar(
-                      radius: 70,
-                      backgroundImage: AssetImage("images/adminprofile.png"),
-                    ),
+                    imageflag == 1
+                        ? CircleAvatar(
+                            backgroundColor: Colors.deepPurple,
+                            radius: 70.0,
+                            backgroundImage:
+                                NetworkImage("${Con.url}/vehicles/$img"),
+                          )
+                        : imageflag == 0
+                            ? _image == null
+                                ? CircleAvatar(
+                                    backgroundColor: Colors.green,
+                                    radius: 70.0,
+                                    child: Icon(Icons.person,
+                                        size: 80.0, color: Colors.white),
+                                  )
+                                : _image != null
+                                    ? CircleAvatar(
+                                        backgroundColor: Colors.red,
+                                        radius: 70.0,
+                                        backgroundImage: FileImage(_image!),
+                                      )
+                                    : CircleAvatar(
+                                        backgroundColor: Colors.pink,
+                                        radius: 70.0,
+                                        child: Icon(Icons.person,
+                                            size: 80.0, color: Colors.white),
+                                      )
+                            : CircleAvatar(
+                                backgroundColor: Colors.pink,
+                                radius: 70.0,
+                                child: Icon(Icons.person,
+                                    size: 80.0, color: Colors.white),
+                              ),
                     Positioned(
                         right: 0,
                         top: 40,
                         child: CircleAvatar(
+                          backgroundColor: Colors.black,
                           radius: 20,
                         )),
                     Positioned(
@@ -133,9 +290,14 @@ class _UpdateTutorState extends State<UpdateTutor> {
                             foregroundColor: Colors.white,
                             radius: 17,
                             backgroundColor: Color.fromRGBO(38, 52, 53, 1),
-                            child: Icon(
-                              Icons.edit,
-                              size: 17,
+                            child: InkWell(
+                              onTap: () {
+                                _getImage(); // Open the image picker
+                              },
+                              child: Icon(
+                                Icons.edit,
+                                size: 17,
+                              ),
                             ),
                           ),
                         ))
@@ -335,7 +497,16 @@ class _UpdateTutorState extends State<UpdateTutor> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    viewTutDetails();
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: ((context) => EditTutor(
+                             name: nameController,
+                                number: phoneNumberController,
+                                address: addressController,
+                                date: joinDateController,
+                                age: ageController,
+                                gender: genderController,
+                                uid: widget.uid,  
+                        ))));
                   },
                   style: ElevatedButton.styleFrom(
                     minimumSize: Size(MediaQuery.of(context).size.width, 50),
@@ -345,7 +516,25 @@ class _UpdateTutorState extends State<UpdateTutor> {
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                     ),
                   ),
-                  child: const Text("UPDATE"),
+                  child: const Text("EDIT"),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+
+                ElevatedButton(
+                  onPressed: () {
+                    addprofile(_image!);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size(MediaQuery.of(context).size.width, 50),
+                    backgroundColor: const Color.fromRGBO(38, 52, 53, 1),
+                    foregroundColor: Colors.white,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                  ),
+                  child: const Text("UPDATE PROFILE PIC"),
                 ),
               ],
             ),

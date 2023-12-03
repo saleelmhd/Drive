@@ -464,7 +464,7 @@ class _AddnewVehicleState extends State<AddnewVehicle> {
                   value: selected_VehicleType,
                   items: ListData.map((VehicleType) {
                     return DropdownMenuItem<String>(
-                      value: '${VehicleType['id']}',
+                      value:  '${VehicleType['name']}',
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

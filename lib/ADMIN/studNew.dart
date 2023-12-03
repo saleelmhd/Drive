@@ -100,13 +100,18 @@ class _StudNewState extends State<StudNew> {
                               ),
                             )),
                         contentPadding: const EdgeInsets.only(top: 5, left: 20),
-                        leading: Container(
-                          height: 72,
-                          width: 72,
-                          decoration: BoxDecoration(
-                              color: Colors.grey,
-                              borderRadius: BorderRadius.circular(5)),
-                        ),
+                        leading:Container(
+                                      height: 80,
+                                      width: 60,
+                                      child: Image.network(
+                                        "${Con.url}/vehicles/${snapshot.data[index]['img']}",
+                                        fit: BoxFit.fill,
+                                      ),
+                                      decoration: BoxDecoration(
+                                          color: Colors.grey,
+                                          borderRadius:
+                                              BorderRadius.circular(50)),
+                                    ),
                         title:  Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [

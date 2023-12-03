@@ -17,8 +17,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return  MaterialApp(
       debugShowCheckedModeBanner: false,
-      // home:Module(),
-      home: DrivingSchoolQuiz(),
+      home:Module(),
+      // home: DrivingSchoolQuiz(),
 
       //  AnimatedSplashScreen(
       //   splash: RichText(

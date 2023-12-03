@@ -1,6 +1,11 @@
+import 'dart:convert';
+
+import 'package:drive_/CONNECTION/connection.dart';
+import 'package:drive_/SHAREDPREFERENCES/sharedPref.dart';
 import 'package:drive_/STUDENTS/StudHome.dart';
 import 'package:drive_/STUDENTS/modelstudHome.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class DrivingSchool extends StatefulWidget {
   var score;
@@ -26,6 +31,37 @@ class DrivingSchool extends StatefulWidget {
 }
 
 class _DrivingSchoolState extends State<DrivingSchool> {
+  var Lid;
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+     SharedPreferencesHelper.getSavedData().then((value) {
+      setState(() {  
+        Lid = value;
+        print('lid=$Lid');
+         addQuizresult();
+      });
+  }
+  );
+  }
+  Future<void> addQuizresult() async {
+    var data = {
+      'totel_question': widget.totelqstns.toString(),
+      'score': widget.score.toString(),
+      'correct_ans': widget.score.toString(),
+      'wrong_ans': widget.wrongAns.toString(),
+      'completion':"${widget.percent}%".toString(),
+      'user_id': Lid,
+      
+    };
+    print("data :${data}");
+    var response =
+        await http.post(Uri.parse('${Con.url}/addQuizresult.php'), body: data);
+
+    print(response.statusCode);
+
+    var res = jsonDecode(response.body);}
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -264,18 +300,21 @@ class _DrivingSchoolState extends State<DrivingSchool> {
                         ),
                         Column(
                           children: [
-                            CircleAvatar(
-                              foregroundColor: Colors.white,
-                              backgroundColor:
-                                  const Color.fromRGBO(95, 106, 110, 1),
-                              radius: 25,
-                              child: SizedBox(
-                                  height: 20,
-                                  width: 25,
-                                  child: Image.asset(
-                                    "images/leaderboard.png",
-                                    fit: BoxFit.cover,
-                                  )),
+                            InkWell(onTap: () {
+                            },
+                              child: CircleAvatar(
+                                foregroundColor: Colors.white,
+                                backgroundColor:
+                                    const Color.fromRGBO(95, 106, 110, 1),
+                                radius: 25,
+                                child: SizedBox(
+                                    height: 20,
+                                    width: 25,
+                                    child: Image.asset(
+                                      "images/leaderboard.png",
+                                      fit: BoxFit.cover,
+                                    )),
+                              ),
                             ),
                             const SizedBox(
                               height: 8,

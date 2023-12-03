@@ -696,7 +696,7 @@ var Lid;
                     hint: const Text(' Select Your vehicle'),
                     value: selected_item1,
                     items: ListData.map((VehicleType) => DropdownMenuItem(
-                         value: '${VehicleType['id']}',
+                         value: '${VehicleType['name']}',
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -13,6 +13,8 @@ class StudALL extends StatefulWidget {
 }
 
 class _StudALLState extends State<StudALL> {
+    var uid;
+
 
  int flag = 0;
   var res;
@@ -28,8 +30,9 @@ class _StudALLState extends State<StudALL> {
     print(response.body);
     print(response.statusCode);
     res = jsonDecode(response.body);
-    //  print(res.length);
+    // print(res.length);
     if (res[0]['result'] == 'Success') {
+      
       flag = 1;
     } else {
       flag = 0;
@@ -50,7 +53,7 @@ class _StudALLState extends State<StudALL> {
   }
 
 
-
+ 
 
 
   @override
@@ -103,12 +106,16 @@ class _StudALLState extends State<StudALL> {
                             )),
                         contentPadding: const EdgeInsets.only(top: 5, left: 20),
                         leading: Container(
-                          height: 72,
-                          width: 72,
-                          decoration: BoxDecoration(
-                              color: Colors.grey,
-                              borderRadius: BorderRadius.circular(5)),
-                        ),
+                                      height: 80,
+                                      width: 60,
+                                      child: Image.network(
+                                        "${Con.url}/vehicles/${snapshot.data[index]['img']}",fit: BoxFit.fill,
+                                      ),
+                                      decoration: BoxDecoration(
+                                          color: Colors.grey,
+                                          borderRadius:
+                                              BorderRadius.circular(50)),
+                                    ),
                         title:  Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
