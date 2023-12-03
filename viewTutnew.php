@@ -1,6 +1,6 @@
 <?php
 include 'connect.php';
-$sql = mysqli_query($con,"SELECT user_id,name, joineddate 
+$sql = mysqli_query($con,"SELECT user_id,name,img, joineddate
 FROM user_tb 
 WHERE role = 'Tutor' AND CURDATE() - INTERVAL 5 DAY <= joineddate ORDER BY `user_tb`.`user_id` DESC;");
 $list = array();
@@ -11,6 +11,8 @@ if ($sql->num_rows > 0) {
         $my_array['result'] = "Success";
         $my_array['user_id'] =$rows['user_id'];
         $my_array['name'] = $rows['name'];
+        $my_array['img'] =$rows['img'];
+
         $my_array['joineddate'] = $rows['joineddate'];
         
 

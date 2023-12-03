@@ -1,6 +1,7 @@
 <?php
 include 'connect.php';
-$sql = mysqli_query($con, "SELECT make, model, img, license_plate FROM vehicle_tb WHERE vehicle_type = '2 Whealer';
+$sql = mysqli_query($con, "SELECT make, model, img, license_plate FROM vehicle_tb WHERE LEFT(vehicle_type, 1) = '2';
+
 ");
 $list = array();
 if ($sql->num_rows > 0) {

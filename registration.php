@@ -14,9 +14,6 @@ $AdminID = $_POST['AdminID'];
 
 
 
-
-
-
 $userid = mysqli_insert_id($con);
 
 $sql1 = mysqli_query($con, "INSERT INTO user_tb(role,name,age,sex,email,phone,address,password,joineddate,selected_veh,generated_id,driving_school_id,admin_id)values('$type','$name','$age','$sex','$email','$mob','$address','12345','$joineddate','$vehicle','$genID','$userid','$AdminID')");

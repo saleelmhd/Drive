@@ -1,6 +1,6 @@
 <?php
 include 'connect.php';
-$sql = mysqli_query($con, "SELECT make, model, img, license_plate FROM vehicle_tb WHERE vehicle_type = '4 Whealer';
+$sql = mysqli_query($con, "SELECT make, model, img, license_plate FROM vehicle_tb WHERE  LEFT(vehicle_type, 1) = '4';
 ");
 $list = array();
 if ($sql->num_rows > 0) {
@@ -25,3 +25,4 @@ if ($sql->num_rows > 0) {
 
 echo json_encode($list);
 ?>
+
